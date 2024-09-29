@@ -1,0 +1,101 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-pagination.pug
+block main
+    h1 Products
+
+    .card.mb-3
+        .card-header Filter 
+        .card-body
+            .row 
+                .col-4
+                    +box-filter([{
+                        label: "All",
+                        value: ""
+                    },
+                    {
+                        label: "Active",
+                        value: "active"
+                    },
+                    {
+                        label: "Inactive",
+                        value: "inactive"
+                    }
+                    ])
+                .col-8
+                    include ../../partials/form-search.pug
+
+    .card
+        .card-header List 
+        .card-body
+            .row.mb-3
+                .col-6
+                    form(
+                        form-change-multi
+                        data-path=`/${prefixAdmin}/products/change-multi`
+                    )
+                        .input-group
+                            select(name="status" class="form-control")
+                                option(value="active") Active
+                                option(value="inactive") Inactive
+                                option(value="delete") Delete
+                            .input-group-append
+                                button(
+                                class="btn btn-success"
+                                type="submit"
+                                ) Apply
+
+                .col-6.text-right
+                    a(href=`/${prefixAdmin}/products/create` class="btn btn-outline-success") Create Product
+
+            table.table.table-hover.table-sm
+                thead
+                tr 
+                    th
+                    th Number
+                    th Image
+                    th Title
+                    th Price
+                    th Position
+                    th Status
+                    th Action
+
+                tbody
+                    each item, index in products
+                        tr 
+                            td
+                                input(type="checkbox" input-change=item.id)
+                            td #{index + 1}
+                            td
+                                img(
+                                    src=item.thumbnail
+                                    alt=item.title
+                                    width="100px"
+                                    height="auto"
+                                )
+                            td #{item.title}
+                            td #{item.price}
+                            td 
+                                input(
+                                    type="number"
+                                    value=item.position
+                                    class = "input-position"
+                                    item-id = item.id
+                                    data-path=`/${prefixAdmin}/products/change-position`
+                                )
+                            td
+                                if(item.status === 'active')
+                                    button(href="#" class="badge badge-success" button-change-status="inactive" item-id=item.id data-path=`/${prefixAdmin}/products/change-status`) Active
+                                else
+                                    button(href="#" class="badge badge-danger" button-change-status="active" item-id=item.id data-path=`/${prefixAdmin}/products/change-status`) Inactive
+                            td
+                                a(
+                                class="btn btn-warning btn-sm"
+                                href=`/${prefixAdmin}/products/edit/${item.id}`
+                                ) Edit
+                                a(
+                                class="btn btn-info btn-sm ml-1"
+                                href=`/${prefixAdmin}/products/detail/${item.id}`
+                                ) Detail
+                                button(class="btn btn-danger btn-sm ml-1" item-id=item.id button-delete data-path=`/${prefixAdmin}/products/delete`) Delete
+        +box-pagination([currentPage, totalPage])

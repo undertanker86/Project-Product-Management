@@ -1,0 +1,1 @@
+console.log('Hello World!'); // In ra Hello World! tren console
