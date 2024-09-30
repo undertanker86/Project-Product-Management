@@ -13,9 +13,9 @@ database.connect(); // Ket noi database
 const routeClient = require('./routes/client/index.route.js');
 const routeAdmin = require('./routes/admin/index.route.js');
 const methodOverride = require('method-override')
-app.set('views', './views'); // Cau hinh views la thu muc views
+app.set('views', `${__dirname}/views`); // Cau hinh views la thu muc views
 app.set('view engine', 'pug'); // Cau hinh view engine la pug
-app.use(express.static('public')); // Cau hinh thu muc public
+app.use(express.static(`${__dirname}/public`)); // Cau hinh thu muc public
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // Cau hinh bien toan cuc prefixAdmin
 app.use(bodyParser.json()); // Dung body-parser
 app.use(bodyParser.urlencoded({ extended: false })); // Dung body-parser
