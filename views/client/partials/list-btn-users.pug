@@ -1,0 +1,23 @@
+.row
+  .col-12
+    a(
+      class="btn btn-primary m-1"
+      href="/user/not-friend"
+    ) List users
+    a(
+      class="btn btn-primary m-1"
+      href="/user/friends"
+    ) List friends
+    a(
+      class="btn btn-primary m-1"
+      href="/user/request"
+    ) Request sent
+    a(
+      class="btn btn-primary m-1"
+      href="/user/accept"
+    ) 
+        | Request received
+        span(
+        class="badge badge-danger ml-1"
+        badge-user-accept=user.id
+      ) #{user.acceptFriends.length}

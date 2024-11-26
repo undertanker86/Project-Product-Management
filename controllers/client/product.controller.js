@@ -1,5 +1,5 @@
 const Product = require('../../models/product.model.js');
-
+const ProductCategory = require('../../models/product-catergory.model');
 module.exports.index = async (req, res) => {
     const products = await Product
     .find({
@@ -13,7 +13,7 @@ module.exports.index = async (req, res) => {
         item.priceNew = item.price - item.price * item.discountPercentage / 100;
         item.priceNew = item.priceNew.toFixed(0);
     }
-    console.log(products);
+    // console.log(products);
     res.render('client/pages/products/index.pug', {
         pageTitle: 'Products',
         products : products
@@ -28,6 +28,16 @@ module.exports.detailProduct = async (req, res) => {
         status: "active",
     });
 
+    if(product.category_id){
+        category = await ProductCategory.findOne({
+            _id: product.category_id,
+            deleted: false,
+            status: "active",
+        });
+
+        product.category = category;
+    }
+
 
 
     product.priceNew = product.price - product.price * product.discountPercentage / 100;
@@ -37,5 +47,78 @@ module.exports.detailProduct = async (req, res) => {
     res.render("client/pages/products/detail.pug", {
         pageTitle: product.title,
         product: product,
+    })
+}
+
+module.exports.categoryProduct = async (req, res) => {
+    const slugCategory = req.params.slugCategory;
+    const categoryData = await ProductCategory.findOne({
+        slug: slugCategory,
+        deleted: false,
+        status: "active",
+    })
+
+    const allCategoryChildren = []
+
+    const getCartegoryChildren = async (parentId) =>{
+        const childs = await ProductCategory.find({
+            parent_id: parentId,
+            deleted: false,
+            status: "active",
+        })
+
+        for(const child of childs){
+            allCategoryChildren.push(child.id);
+
+            await getCartegoryChildren(child.id);
+        }
+    };
+
+    await getCartegoryChildren(categoryData.id);
+    // console.log("Check");
+    console.log(allCategoryChildren);
+
+    const products = await Product.find({
+        category_id: {$in: [categoryData.id, ...allCategoryChildren ]},
+        deleted: false,
+        status: "active",
+    }).sort({position: "desc"});
+
+    for(const item of products){
+        item.priceNew = item.price - item.price * item.discountPercentage / 100;
+        item.priceNew = item.priceNew.toFixed(0);
+    }
+    res.render("client/pages/products/index.pug", {
+        pageTitle: "Product Categories",
+        products: products,
+    })
+
+
+}
+
+module.exports.searchProduct = async (req, res) => {
+    const keyword = req.query.keyword;
+
+    let products = [];
+
+    if(keyword){
+        const regex = new RegExp(keyword, 'i');
+        products = await Product
+            .find({
+                title: regex,
+                deleted: false,
+                status: "active", 
+            })
+            .sort({position: "desc"});
+        for(const item of products){
+            item.priceNew = item.price - item.price * item.discountPercentage / 100;
+            item.priceNew = item.priceNew.toFixed(0);
+        }
+    }
+
+    res.render("client/pages/products/search.pug", {
+        pageTitle: `Search Product: ${keyword}`,
+        keyword: keyword,
+        products: products,
     })
 }

@@ -1,6 +1,56 @@
 extends ../../layouts/default.pug
 
-block main 
+block main
+  if(role.permissions.includes("dashboard_view"))
     h1 Dashboard
-    p Welcome to the admin dashboard
 
+    .row.mt-4
+      .col-12
+        .card.mb-4
+          .card-header Information account
+          .card-body
+            if(user.avatar)
+              img(
+                src=user.avatar
+                style="height: 100px;margin-bottom: 15px;"
+              )
+            if(user.fullName)
+              p Full name: <b>#{user.fullName}</b>
+            if(user.email)
+              p Email: <b>#{user.email}</b>
+            if(user.phone)
+              p Phone number: <b>#{user.phone}</b>
+            if(role.title)
+              p Roles: <b>#{role.title}</b>
+
+      .col-6
+        .card.mb-4
+          .card-header Category
+          .card-body
+            p Stocks: <b>5</b>
+            p Active: <b>3</b>
+            p Inactive: <b>2</b>
+
+      .col-6
+        .card.mb-4
+          .card-header Product
+          .card-body
+            p Stocks: <b>#{statistic.product.total}</b>
+            p Active: <b>#{statistic.product.active}</b>
+            p Inactive: <b>#{statistic.product.inactive}</b>
+
+      .col-6
+        .card.mb-4
+          .card-header Admin accounts
+          .card-body
+            p Quantity: <b>5</b>
+            p Active: <b>3</b>
+            p Inactive: <b>2</b>
+
+      .col-6
+        .card.mb-4
+          .card-header Client accounts
+          .card-body
+            p Quantity: <b>5</b>
+            p Active: <b>3</b>
+            p Inactive: <b>2</b>

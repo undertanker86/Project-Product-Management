@@ -1,0 +1,139 @@
+extends ../../layouts/default.pug
+block main
+  h1 #{pageTitle}
+  div(class="text-right")
+    button(
+      type="submit"
+      class="btn btn-primary mb-3"
+      button-submit
+      data-path=`/${prefixAdmin}/roles/permissions`
+    ) Update
+  table(
+    class="table table-hover table-sm" 
+    table-permissions=records
+  )
+    thead
+      tr
+        th Feature
+        each item in records
+          th(class="text-center" role-id=item.id) #{item.title}
+    tbody
+      //- Tổng quan
+      tr
+        td(colspan="4")
+          b Overview
+      tr(data-name="dashboard_view")
+        td Xem
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      //- Hết Tổng quan
+      //- Danh mục sản phẩm
+      tr
+        td(colspan="4")
+          b Category
+      tr(data-name="products-category_view")
+        td View
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="products-category_create")
+        td Add
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="products-category_edit")
+        td Edit
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="products-category_delete")
+        td Delete
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      //- Hết Danh mục sản phẩm
+      //- Sản phẩm
+      tr
+        td(colspan="4")
+          b Product
+      tr(data-name="products_view")
+        td View
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="products_create")
+        td Add
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="products_edit")
+        td Edit
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="products_delete")
+        td Delete
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      //- Hết Sản phẩm
+      //- Nhóm quyền
+      tr
+        td(colspan="4")
+          b Permission
+      tr(data-name="roles_view")
+        td View
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="roles_create")
+        td Add
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="roles_edit")
+        td Edit
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="roles_delete")
+        td Delete
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="roles_permissions")
+        td Permission
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      //- Hết Nhóm quyền
+      //- Tài khoản
+      tr
+        td(colspan="4")
+          b Account
+      tr(data-name="accounts_view")
+        td View
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="accounts_create")
+        td Add
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="accounts_edit")
+        td Edit
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr(data-name="accounts_delete")
+        td Delete
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      //- Hết Tài khoản
+
+      
+
+

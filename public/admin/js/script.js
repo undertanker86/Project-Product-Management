@@ -212,3 +212,75 @@ if(uploadImage){
         }
     });
 }
+
+
+const sortSelect = document.querySelector('[sort-select]');
+if(sortSelect){
+    let url = new URL(location.href); // Duplicate url
+    sortSelect.addEventListener('change', function(){
+        const value = sortSelect.value;
+        if(value){
+            const [sortKey, sortValue] = value.split('-');
+            url.searchParams.set('sortKey', sortKey);
+            url.searchParams.set('sortValue', sortValue);
+            
+        } else{
+            url.searchParams.delete('sortKey');
+            url.searchParams.delete('sortValue');
+        }
+        location.href = url;
+    });
+
+    const sortKeyCurrent = url.searchParams.get('sortKey');
+    const sortValueCurrent = url.searchParams.get('sortValue');
+    if(sortKeyCurrent && sortValueCurrent){
+        sortSelect.value = `${sortKeyCurrent}-${sortValueCurrent}`;
+    }
+}
+
+
+const tablePermission = document.querySelector('[table-permissions]');
+if (tablePermission) {
+   const buttionSubmit = document.querySelector('[button-submit]');
+    buttionSubmit.addEventListener('click', function(){
+        const dataFinal = [];
+        const listElementRoleId = document.querySelectorAll('[role-id]');
+        listElementRoleId.forEach(element => {
+            const roleId = element.getAttribute('role-id');
+            const permissions = [];
+            const listInputChecked = document.querySelectorAll(`input[data-id="${roleId}"]:checked`);
+            listInputChecked.forEach(input => {
+                const tr = input.closest(`tr[data-name]`);
+                const name = tr.getAttribute('data-name');
+                permissions.push(name);
+            });
+            dataFinal.push({
+                roleId: roleId,
+                permissions: permissions
+            });
+        })
+        const path = buttionSubmit.getAttribute('data-path');
+
+        fetch(path, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataFinal)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.code === 200){
+                location.reload();
+            }
+        })
+    })
+    let dataPermissions = tablePermission.getAttribute('table-permissions');
+    dataPermissions = JSON.parse(dataPermissions);
+    dataPermissions.forEach(item => {
+        item.permissions.forEach(permission => {
+            const input = document.querySelector(`tr[data-name="${permission}"] input[data-id="${item._id}"]`);
+            input.checked = true;
+        });
+    });
+}
