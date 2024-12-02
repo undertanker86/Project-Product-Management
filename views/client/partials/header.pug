@@ -1,40 +1,41 @@
 include ../mixins/sub-category.pug
 header.header
-  .container
-    .row.align-items-center
-      .col-3
-        .inner-logo
-          a(href="/")
-            img(src=settingGeneral.logo, alt="Logo")
-
-      .col-5
-        form(
-          action="/products/search"
-          method="GET"
-        ) 
-          div(class="form-group d-flex mb-0")
-            input(
-              type="text"
-              placeholder="Enter keywords..."
-              class="form-control"
-              name="keyword"
-              value=keyword
-            )
-            button(
-              type="submit"
-              class="btn btn-primary"
-            ) Search
-
-      .col-4
-        .inner-menu
-          ul
-            li
-              a(href="/") Home
-            li(class="sub-menu")
-              a(href="/products") Product
-              +sub-category(allCategory)
-            li
-              a(href="/cart") Cart (#{miniCart})
+    <div class="container">
+        <div class="inner-wrap">
+            <button class="inner-icon-menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="inner-logo">
+                <a href="/">
+                    <img src="/css/images/logo.svg" alt="Monitor">
+                </a>
+            </div>
+            <nav class="inner-menu">
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="/products">Product</a>
+                            +sub-category(allCategory)
+                  
+                    </li>
+                    <li>
+                        <a href="/cart">Cart (#{miniCart})</a>
+                    </li>
+                    <li>
+                        <a href="#">Chat</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="inner-search">
+                <form action="/products/search"  method="GET">
+                    <input class="form-control" type="text" name="keyword" value=keyword  placeholder="Enter keyword...">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
             if(user)
               li
                 a(href="/user/profile") #{user.fullName}
@@ -43,8 +44,66 @@ header.header
               li
                 a(href="/user/logout") Logout
             else
-              li
-                a(href="/user/login") Login
-              li
-                a(href="/user/register") Register
+                <div class="inner-button">
+                    <a href="/user/login" class="button">Login</a>
+                </div>
+                <div class="inner-button">
+                    <a href="/user/register" class="button" style="background-color: #A4DBD8;">Register</a>
+                </div>
+                <button class="inner-icon-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+        </div>
+    </div>
+ 
+//- header.header
+//-   .container
+//-     .row.align-items-center
+//-       .col-3
+//-         .inner-logo
+//-           a(href="/")
+//-             img(src=settingGeneral.logo, alt="Logo")
+
+//-       .col-5
+//-         form(
+//-           action="/products/search"
+//-           method="GET"
+//-         ) 
+//-           div(class="form-group d-flex mb-0")
+//-             input(
+//-               type="text"
+//-               placeholder="Enter keywords..."
+//-               class="form-control"
+//-               name="keyword"
+//-               value=keyword
+//-             )
+//-             button(
+//-               type="submit"
+//-               class="btn btn-primary"
+//-             ) Search
+
+//-       .col-4
+//-         .inner-menu
+//-           ul
+//-             li
+//-               a(href="/") Home
+//-             li(class="sub-menu")
+//-               a(href="/products") Product
+//-               +sub-category(allCategory)
+//-             li
+//-               a(href="/cart") Cart (#{miniCart})
+//-             if(user)
+//-               li
+//-                 a(href="/user/profile") #{user.fullName}
+//-               li
+//-                 a(href="/user/friends") Friends
+//-               li
+//-                 a(href="/user/logout") Logout
+//-             else
+//-               li
+//-                 a(href="/user/login") Login
+//-               li
+//-                 a(href="/user/register") Register
+
+
                     

@@ -4,6 +4,10 @@ const generateHelper = require("../../helpers/generate.helper");
 const ForgotPassword = require("../../models/forgot-password.model");
 const sendMailHelper = require("../../helpers/sendMail.helper");
 const userSocket = require("../../sockets/client/user.socket");
+
+
+
+
 module.exports.register = async (req, res) => {
   res.render("client/pages/user/register", {
     pageTitle: "Register Account",
@@ -264,6 +268,7 @@ module.exports.accept = async (req, res) => {
 
 
 
+
 module.exports.friends = async (req, res) => {
   // const userIdA = res.locals.user.id;
   const friendsList = res.locals.user.friendsList;
@@ -293,3 +298,7 @@ module.exports.friends = async (req, res) => {
     users: users
   });
 };
+
+
+
+

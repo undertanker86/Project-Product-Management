@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+
 block main
   .container.my-5
     .row.justify-content-center
@@ -27,13 +28,15 @@ block main
               required
             )
 
-          div(class="form-group")
-              <button class="g-signin2" data-onsuccess="onSignIn"></button>
-              //- label(for="password") âs
+          .google-login-container
+            a(href="/auth/google" class="btn btn-danger btn-google")
+              i(class="fa-brands fa-google") 
+              | Login with Google
+
           div(class="form-group")
             button(
               type="submit"
               class="btn btn-primary btn-block"
             ) Login
-          
-        a(href="/user/password/forgot") Forgot password?
+
+          a(href="/user/password/forgot") Forgot password?

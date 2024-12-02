@@ -3,28 +3,276 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-item.pug
 
 block main
-  h1 Home
-  .container.my-3
-    +box-head("Outstanding products")
-    .row
-      each item in productsFeatured
-        +product-item(item)
+    <div class="section-1">
+        <div class="container">
+            <div class="inner-wrap">
+                <img class="inner-bg-4" src="/css/images/section-1-bg-4.svg" alt="rec-4">
+                <div class="inner-content">
+                    <img class="inner-bg-1" src="/css/images/section-1-bg-1.svg" alt="rec-1">
+                    <h1 class="inner-title">Get 50GB for just $39/mth.</h1>
+                    <h2 class="inner-sub-title"></h2>
+                    <p class="inner-desc">That’s $10/mth off plan fees when you sign up to a SIM Only or Small plan with a phone.</p>
+                    <div class="inner-buttons">
+                        <a href="#" class="button button-outline">Introduction <i class="fa-regular fa-circle-play"></i></a>
+                        <a href="#" class="button">Explore Now !</a>
+                    </div>
+                    <img class="inner-bg-2" src="/css/images/section-1-bg-2.svg" alt="rec-2">
+                </div>
+                <div class="inner-image">
+                    <img class="inner-image-main" src="/css/images/iphone-removebg-preview.png" alt="dog">
+                    <img class="inner-bg-3" src="/css/images/section-1-bg-3.svg" alt="rec-3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-2">
+        <div class="container">
+            <div class="box-head">
+                <div class="inner-left">
+                    <div class="inner-sub-title">
+                        | Hot Product
+                    </div>
+                    <h2 class="inner-title">Some hot product</h2>
+                </div>
+                <div class="inner-right">
+                    <a href="#" class="button button-outline">Introduction <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+            </div>
+            <div class="inner-wrap">
+                <div class="inner-item">
+                    <div class="inner-image">
+                        <a href="#">
+                            <img src="css\images\iphone-16-pro-max-black-titanium-feature1-l.jpg" alt="dog-1">
+                        </a>
+                    </div>
+                    <div class="inner-content">
+                        <h3 class="inner-title">
+                            <a href="#">
+                                | MO231 - Iphone 16 Promax 
+                            </a>
+                        </h3>
+                        <div class="inner-meta">
+                            <div class="inner-meta-item">
+                                | Min cost $1,648.80 over 36 months. Plan cost additional.
+                            </div>
+                            <div class="inner-meta-dot"></div>
+                            <div class="inner-meta-item">
+                                <span>Repayment:</span>
+                                <strong>6.900.000 VND</strong>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+
+                <div class="inner-item">
+                    <div class="inner-image">
+                        <a href="#">
+                            <img src="css\images\iphone-16-pro-max-black-titanium-feature1-l.jpg" alt="dog-2">
+                        </a>
+                    </div>
+                    <div class="inner-content">
+                        <h3 class="inner-title">
+                            <a href="#">
+                                | MO231 - Iphone 16 Promax 
+                            </a>
+                        </h3>
+                        <div class="inner-meta">
+                            <div class="inner-meta-item">
+                                | Min cost $1,648.80 over 36 months. Plan cost additional.
+                            </div>
+                            <div class="inner-meta-dot"></div>
+                            <div class="inner-meta-item">
+                                <span>Repayment:</span>
+                                <strong>6.900.000 VND</strong>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+        
+                <div class="inner-item">
+                    <div class="inner-image">
+                        <a href="#">
+                            <img src="css\images\iphone-16-pro-max-black-titanium-feature1-l.jpg" alt="dog-7">
+                        </a>
+                    </div>
+                    <div class="inner-content">
+                        <h3 class="inner-title">
+                            <a href="#">
+                                | MO231 - Iphone 16 Promax 
+                            </a>
+                        </h3>
+                        <div class="inner-meta">
+                            <div class="inner-meta-item">
+                                | Min cost $1,648.80 over 36 months. Plan cost additional.
+                            </div>
+                            <div class="inner-meta-dot"></div>
+                            <div class="inner-meta-item">
+                                <span>Repayment:</span>
+                                <strong>6.900.000 VND</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                //- <div class="inner-item">
+                //-     <div class="inner-image">
+                //-         <a href="#">
+                //-             <img src="css\images\iphone-16-pro-max-black-titanium-feature1-l.jpg" alt="dog-8">
+                //-         </a>
+                //-     </div>
+                //-     <div class="inner-content">
+                //-         <h3 class="inner-title">
+                //-             <a href="#">
+                //-                 | MO231 - Iphone 16 Promax 
+                //-             </a>
+                //-         </h3>
+                //-        <div class="inner-meta">
+                //-             <div class="inner-meta-item">
+                //-                 | Min cost $1,648.80 over 36 months. Plan cost additional.
+                //-             </div>
+                //-             <div class="inner-meta-dot"></div>
+                //-             <div class="inner-meta-item">
+                //-                 <span>Repayment:</span>
+                //-                 <strong>6.900.000 VND</strong>
+                //-             </div>
+                //-         </div>
+                //-     </div>
+                //- </div>
+            </div>
+
+            <div class="inner-button-bottom">
+                <a href="#" class="button button-outline">Watch More <i class="fa-solid fa-angle-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="section-3">
+        <div class="container">
+            <div class="inner-wrap">
+                <div class="inner-image">
+                    <img src="/css/images/Remove-bg.ai_1733135729899.png" alt="human-dog">
+                </div>
+                <div class="inner-content">
+                    <h2 class="inner-title">Wide range of equipment options</h2>
+                    <h3 class="inner-sub-title">Help you save a lot of money</h3>
+                    <p class="inner-desc">We're more than doubling our network, planned from early 2025.</p>
+                    <div class="inner-buttons">
+                        <a href="#" class="button button-outline">Giới Thiệu <i class="fa-regular fa-circle-play"></i></a>
+                        <a href="#" class="button">Explore Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="section-4">
+        <div class="container">
+            <div class="box-head">
+                <div class="inner-left">
+                    <div class="inner-sub-title">
+                        | Maybe you don't know?
+                    </div>
+                    <h2 class="inner-title">New phone trend newsletter</h2>
+                </div>
+                <div class="inner-right">
+                    <a href="#" class="button button-outline">Watch more <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+            </div>
+            <div class="inner-wrap">
+                <div class="inner-item">
+                    <div class="inner-image">
+                        <a href="#">
+                            <img src="/css/images/blog-black-friday-2024-tile.jpg" alt="article-1">
+                        </a>
+                    </div>
+                    <div class="inner-content">
+                        <div class="inner-tag">
+                            | Phone trends
+                        </div>
+                        <h3 class="inner-title">
+                            <a href="">How to shop like a pro this Black Friday</a>
+                        </h3>
+                        <div class="inner-desc">
+                            <p>From narrowing down your wishlist to spotting the best deals and devices, learn how to shop like a pro this Black Friday with our essential shopping tips.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-item">
+                    <div class="inner-image">
+                        <a href="#">
+                            <img src="/css/images/blog-black-friday-2024-tile.jpg" alt="article-2">
+                        </a>
+                    </div>
+                    <div class="inner-content">
+                        <div class="inner-tag">
+                            | Phone trends
+                        </div>
+                        <h3 class="inner-title">
+                            <a href="">How to shop like a pro this Black Friday</a>
+                        </h3>
+                        <div class="inner-desc">
+                            <p>From narrowing down your wishlist to spotting the best deals and devices, learn how to shop like a pro this Black Friday with our essential shopping tips.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-item">
+                    <div class="inner-image">
+                        <a href="#">
+                            <img src="/css/images/blog-black-friday-2024-tile.jpg" alt="article-3">
+                        </a>
+                    </div>
+                    <div class="inner-content">
+                        <div class="inner-tag">
+                            | Phone trends
+                        </div>
+                        <h3 class="inner-title">
+                            <a href="">How to shop like a pro this Black Friday</a>
+                        </h3>
+                        <div class="inner-desc">
+                            <p>From narrowing down your wishlist to spotting the best deals and devices, learn how to shop like a pro this Black Friday with our essential shopping tips.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="inner-button-bottom">
+                <a href="#" class="button button-outline">Introduction <i class="fa-solid fa-angle-right"></i></a>
+            </div>
+        </div>
+    </div>
+        
+
+
+//-   h1 Home
+//-   .container.my-3
+//-     +box-head("Outstanding products")
+//-     .row
+//-       each item in productsFeatured
+//-         +product-item(item)
   
   
-  .container.my-3
-    +box-head("New products")
-    .row
-      each item in productsNew
-        +product-item(item)
+//-   .container.my-3
+//-     +box-head("New products")
+//-     .row
+//-       each item in productsNew
+//-         +product-item(item)
   
-  .container.my-3
-    +box-head("Discount products")
-    .row
-      each item in productsDiscount
-        +product-item(item)
+//-   .container.my-3
+//-     +box-head("Discount products")
+//-     .row
+//-       each item in productsDiscount
+//-         +product-item(item)
   
-  .container.my-3
-    +box-head("Recommend products")
-    .row
-      each item in productsChoose
-        +product-item(item)
+//-   .container.my-3
+//-     +box-head("Recommend products")
+//-     .row
+//-       each item in productsChoose
+//-         +product-item(item)
