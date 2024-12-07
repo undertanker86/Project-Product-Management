@@ -9,10 +9,25 @@ module.exports.index = async (req, res) => {
     .sort({
         position: "desc"
     });
+    console.log(products);
+
     for(const item of products){
-        item.priceNew = item.price - item.price * item.discountPercentage / 100;
-        item.priceNew = item.priceNew.toFixed(0);
-    }
+        
+        // item.priceNew = item.price - item.price * item.discountPercentage / 100;
+        // item.priceNew = item.priceNew.toFixed(0);
+        // console.log(parseFloat((item.colors[0]).price));
+
+        item.priceOld = parseFloat((item.colors[0]).price) 
+                      + parseFloat((item.capacities[0]).price) 
+                      + parseFloat((item.repayments[0]).price)
+                      + (parseFloat((item.freeSMS).price) * parseFloat((item.freeSMS).number))
+                        + (parseFloat((item.freeMinutes).price) * parseFloat((item.freeMinutes).number))
+                        + (parseFloat((item.freeGB).price) * parseFloat((item.freeGB).number));
+        console.log(item.priceOld);
+        item.priceNew = item.priceOld - (item.priceOld * parseFloat(item.discountPercentage) / 100);
+        
+        // item.priceNew = item.priceNew.toFixed(0);
+    }   
     // console.log(products);
     res.render('client/pages/products/index.pug', {
         pageTitle: 'Products',
@@ -40,8 +55,21 @@ module.exports.detailProduct = async (req, res) => {
 
 
 
-    product.priceNew = product.price - product.price * product.discountPercentage / 100;
-    product.priceNew = product.priceNew.toFixed(0);
+    // product.priceNew = product.price - product.price * product.discountPercentage / 100;
+    // product.priceNew = product.priceNew.toFixed(0);
+   
+     
+        // product.priceOld = Number((product.colors[0]).price) + Number((product.capacities[0]).price)+ Number((product.repayments[0]).price); 
+        // product.priceNew = product.priceOld - product.priceOld * product.discountPercentage / 100;
+        // product.priceNew = product.priceNew.toFixed(0);
+        product.priceOld = parseFloat((product.colors[0]).price) 
+        + parseFloat((product.capacities[0]).price) 
+        + parseFloat((product.repayments[0]).price)
+        + (parseFloat((product.freeSMS).price) * parseFloat((product.freeSMS).number))
+        + (parseFloat((product.freeMinutes).price) * parseFloat((product.freeMinutes).number))
+        + (parseFloat((product.freeGB).price) * parseFloat((product.freeGB).number));
+
+        product.priceNew = product.priceOld - (product.priceOld * parseFloat(product.discountPercentage) / 100);
 
 
     res.render("client/pages/products/detail.pug", {

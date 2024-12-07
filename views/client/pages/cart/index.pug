@@ -14,6 +14,7 @@ block main
                 th STT
                 th Image
                 th Title
+                th Description
                 th Price
                 th Quantity
                 th Total
@@ -26,6 +27,8 @@ block main
                     img(src=item.thumbnail, alt=item.title width="80px")
                   td
                     a(href=`/products/detail/${item.slug}`) #{item.title}
+                  td 
+                    != description[index]
                   td #{item.priceNew}$
                   td
                     input(
@@ -39,7 +42,7 @@ block main
                   td #{item.total.toLocaleString()}$
                   td
                     a(
-                      href=`/cart/delete/${item.productId}`
+                      href=`/cart/delete/${item.productId}/${item.priceNew}`
                       class="btn btn-danger"
                     ) Delete
           

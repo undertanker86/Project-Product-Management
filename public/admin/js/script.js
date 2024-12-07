@@ -284,3 +284,70 @@ if (tablePermission) {
         });
     });
 }
+
+
+   // JavaScript để tạo các input màu và giá linh động
+document.getElementById('num-options').addEventListener('change', function(e) {
+    let numOptions = e.target.value;
+    let container = document.getElementById('input-container');
+    container.innerHTML = ''; // Reset vùng nhập liệu
+
+    // Tạo các input theo số lượng màu và giá
+    for (let i = 1; i <= numOptions; i++) {
+      let colorInput = document.createElement('div');
+      colorInput.innerHTML = `
+        <label for="name_color${i}">Color ${i}</label>
+        <input type="text" class="form-control" id="name_color${i}" name="name_color${i}" required>
+        <label for="price_color${i}">Price ${i}</label>
+        <input type="number" class="form-control" id="price_color${i}" name="price_color${i}" required>
+      `;
+      container.appendChild(colorInput);
+    }
+  });
+
+
+    // JavaScript để tạo các input màu và giá linh động
+document.getElementById('num-options-2').addEventListener('change', function(e) {
+        console.log('change');
+        let numOptions = e.target.value;
+        let container = document.getElementById('input-container-2');
+        container.innerHTML = ''; // Reset vùng nhập liệu
+    
+        // Tạo các input theo số lượng màu và giá
+        for (let i = 1; i <= numOptions; i++) {
+          let capacityInput = document.createElement('div');
+          capacityInput.innerHTML = `
+            <label for="name_capacity${i}">Capacity ${i}</label>
+            <input type="text" class="form-control" id="name_capacity${i}" name="name_capacity${i}" required>
+            <label for="price_capacity${i}">Price ${i}</label>
+            <input type="number" class="form-control" id="price_capacity${i}" name="price_capacity${i}" required>
+          `;
+          container.appendChild(capacityInput);
+        }
+      });
+
+    // JavaScript để tạo các input màu và giá linh động
+document.getElementById('num-options-3').addEventListener('change', function(e) {
+        console.log('change');
+        let numOptions = e.target.value;
+        let container = document.getElementById('input-container-3');
+        container.innerHTML = ''; // Reset vùng nhập liệu
+    
+        // Tạo các input theo số lượng màu và giá
+        for (let i = 1; i <= numOptions; i++) {
+          let capacityInput = document.createElement('div');
+          capacityInput.innerHTML = `
+            <label for="name_repayment${i}">Repayment ${i}</label>
+            <input type="text" class="form-control" id="name_repayment${i}" name="name_repayment${i}" required>
+            <label for="price_repayment${i}">Price ${i}</label>
+            <input type="number" class="form-control" id="price_repayment${i}" name="price_repayment${i}" required>
+          `;
+          container.appendChild(capacityInput);
+        }
+      });
+    
+ 
+
+
+
+

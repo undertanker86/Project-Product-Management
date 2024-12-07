@@ -1,0 +1,22 @@
+//- list-product.pug
+
+mixin list-product(item)
+    .inner-wrap
+        .inner-item
+            .inner-image
+                a(href=`/products/detail/${item.slug}`)
+                    img(src= item.thumbnail, alt="dog-1")
+            .inner-content
+                h3.inner-title
+                    a(href=`/products/detail/${item.slug}`) 
+                        |  #{item.title}
+                .inner-meta
+                    .inner-meta-item
+                        | Min cost  $ #{item.priceOld} over #{(item.repayments[0]).name} months. Plan cost additional.
+                    .inner-meta-dot
+                    .inner-meta-item
+                        span Repayment: $ #{item.repayments[0].price} per month
+                        strong
+        .inner-button-bottom
+            a.button.button-outline(href="#") Watch More 
+            i.fa-solid.fa-angle-right

@@ -9,6 +9,7 @@ const accountSchema = new mongoose.Schema(
     avatar: String,
     role_id: String,
     status: String,
+    friendsList: Array,
     deleted: {
       type: Boolean,
       default: false,

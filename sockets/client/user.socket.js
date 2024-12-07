@@ -1,9 +1,11 @@
 const User = require("../../models/user.model");
 const RoomChat = require("../../models/rooms-chat.model");
-
+const Account = require("../../models/account.model");
 module.exports = (req, res) => {
+
   const userIdA = res.locals.user.id;
   _io.once("connection", (socket) => {
+    console.log("Connected:", socket.id); // Đảm bảo kết nối thành công
     // Khi A gửi yêu cầu cho B
     socket.on("CLIENT_ADD_FRIEND", async (userIdB) => {
       // Thêm id của A vào acceptFriends của B
@@ -181,5 +183,52 @@ module.exports = (req, res) => {
         });
       }
     })
+
+    socket.on("CLIENT_CHAT_ADMIN", async (userIdB) => {
+      // Tìm phòng trò chuyện đã có giữa userIdA và userIdB
+      const existingRoomChat = await RoomChat.findOne({
+        typeRoom: "exchange",
+        users: {
+          $all: [
+            { userId: userIdA, role: "superAdmin" },
+            { userId: userIdB, role: "superAdmin" }
+          ]
+        }
+      });
+    
+      // Nếu không tìm thấy phòng trò chuyện, tạo phòng trò chuyện mới
+      if (!existingRoomChat) {
+        const roomChat = new RoomChat({
+          typeRoom: "exchange",
+          users: [
+            { userId: userIdA, role: "superAdmin" },
+            { userId: userIdB, role: "superAdmin" }
+          ]
+        });
+    
+        await roomChat.save();
+    
+        // Cập nhật danh sách bạn bè của userIdA và userIdB
+        await User.updateOne(
+          { _id: userIdA },
+          { $push: { friendsList: { userId: userIdB, roomChatId: roomChat.id } } }
+        );
+    
+        await Account.updateOne(
+          { _id: userIdB },
+          { $push: { friendsList: { userId: userIdA, roomChatId: roomChat.id } } }
+        );
+    
+        // Phát sự kiện trả về thông tin phòng trò chuyện mới
+        _io.emit("SERVER_RETURN_CREATE_CHATADMIN_FRIENDS", {
+          roomChatId: roomChat.id
+        });
+      } else {
+        // Nếu phòng trò chuyện đã tồn tại, trả về thông tin phòng trò chuyện
+        _io.emit("SERVER_RETURN_EXISTING_CHATADMIN_FRIENDS", {
+          roomChatId: existingRoomChat.id
+        });
+      }
+    });
   })
 }

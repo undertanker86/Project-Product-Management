@@ -23,43 +23,33 @@ module.exports.callBack = async (req, res) => {
 
 
     if (profile.id) {
-      // const existUser = await User.findOne({
-      //   email: profile.emails[0].value,
-      //   deleted: false
-      // });
-      // if(existUser) {
-      //   req.flash("error", "Email đã tồn tại trong hệ thống!");
-      //   res.redirect("back");
-      //   return;
-      // }
-
-      const dataUser = {
-        fullName: profile.name.familyName + ' ' + profile.name.givenName,
+      const existUser = await User.findOne({
         email: profile.emails[0].value,
-        password: md5(profile.id),
-        token: generateHelper.generateRandomString(30),
-        status: "active"
-      };
-      const newUser = new User(dataUser);
-      await newUser.save();
-      res.cookie("tokenUser", newUser.token);
-      req.flash("success", "Đăng ký tài khoản thành công!");
-      res.redirect("/");
+        deleted: false
+      });
+      if(existUser) {
+        // req.flash("error", "Email exist!");
+        // res.cookie("tokenUser", newUser.token);
+        res.cookie("tokenUser", existUser.token);
+        req.flash("success", "Login Success!");
+        res.redirect("/");
 
-      // User.findOne({googleId: profile.id})
-      //   .then((existingUser) => {
-      //     if (existingUser) {
-      //       done(null, existingUser);
-      //     } else {
-      //       new User({
-      //         googleId: profile.id,
-      //         email: profile.emails[0].value,
-      //         name: profile.name.familyName + ' ' + profile.name.givenName
-      //       })
-      //         .save()
-      //         .then(user => done(null, user));
-      //     }
-      //   })
+      }
+
+      else{
+        const dataUser = {
+          fullName: profile.name.familyName + ' ' + profile.name.givenName,
+          email: profile.emails[0].value,
+          password: md5(profile.id),
+          token: generateHelper.generateRandomString(30),
+          status: "active"
+        };
+        const newUser = new User(dataUser);
+        await newUser.save();
+        res.cookie("tokenUser", newUser.token);
+        req.flash("success", "Login Success!");
+        res.redirect("/");
+      }
     }
   }
   

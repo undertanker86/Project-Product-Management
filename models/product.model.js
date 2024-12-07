@@ -10,7 +10,9 @@ const productSchema = mongoose.Schema({
     },
     category_id: String,
     description: String,
-    price: Number,
+    colors: Array,
+    capacities: Array,
+    repayments: Array,
     discountPercentage: Number,
     stock: Number,
     thumbnail: String,
@@ -20,14 +22,25 @@ const productSchema = mongoose.Schema({
     createdAt: Date,
     updatedBy: String,
     updatedAt: Date,
+    freeSMS: {
+        number: Number,
+        price: Number
+    },
+    freeMinutes: {
+        number: Number,
+        price: Number
+    },
+    freeGB: {
+        number: Number,
+        price: Number
+    },
     featured: {
         type: String,
         default: "0"
     },
     deleted: {
         type: Boolean,
-        default: false,
-        unique: true
+        default: false
     }
 });
 

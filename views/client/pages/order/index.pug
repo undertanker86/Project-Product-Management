@@ -1,70 +1,155 @@
-extends ../../layouts/default.pug
-include ../../mixins/box-head.pug
-block main
-  .container.my-3
-    .row
-      .col-12
-        +box-head("Order")
-    .row
-      .col-12
-        if(products.length > 0)
-          table(class="table table-bordered" table-cart)
-            thead
-              tr
-                th STT
-                th Image
-                th Name
-                th Price
-                th Quantity
-                th Total
-            tbody
-              each item, index in products
-                tr
-                  td #{index + 1}
-                  td
-                    img(src=item.thumbnail, alt=item.title width="80px")
-                  td #{item.title}
-                  td #{item.priceNew}$
-                  td #{item.quantity}
-                  td #{item.total.toLocaleString()}$
-          
-          h3(class="text-right") Total Orders: #{total.toLocaleString()}$
-    .row
-      .col-12
-        .card.p-4.my-4
-          form(
-            action="/order"
-            method="POST"
-          )
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+block main 
+  .container.my-3 
+    .row 
+      .col-12 
+        +box-head("Order") 
+    .row 
+      .col-12 
+        if(products.length > 0) 
+          table(class="table table-bordered" table-cart) 
+            thead 
+              tr 
+                th STT 
+                th Image 
+                th Name 
+                th Description 
+                th Price 
+                th Quantity 
+                th Total 
+            tbody 
+              each item, index in products 
+                tr 
+                  td #{index + 1} 
+                  td 
+                    img(src=item.thumbnail, alt=item.title width="80px") 
+                  td #{item.title} 
+                  td  
+                    !=description[index] 
+                  td #{item.priceNew}$ 
+                  td #{item.quantity} 
+                  td #{total.toLocaleString()}$ 
+          h3(class="text-right" id = "total-price-discount") Total Orders: #{total.toLocaleString()}$ 
+    .row 
+      .col-12 
+        .card.p-4.my-4 
+          form( 
+            action="/order" 
+            method="POST" 
+          ) 
+            // Full Name
+            div(class="form-group") 
+              label(for="fullName") Name 
+              input( 
+                type="text" 
+                class="form-control" 
+                id="fullName" 
+                name="fullName" 
+                required 
+                value=user.fullName 
+              ) 
+            
+            // Phone
+            div(class="form-group") 
+              label(for="phone") Phone number 
+              input( 
+                type="text" 
+                class="form-control" 
+                id="phone" 
+                name="phone" 
+                required 
+                value=user.phone 
+              ) 
+            
+            // Address
+            div(class="form-group") 
+              label(for="address") Address 
+              input( 
+                type="text" 
+                class="form-control" 
+                id="address" 
+                name="address" 
+                required 
+                value=user.address 
+              ) 
+            
+            // Credit Card Section
+            div(class="form-group") 
+              label Credit Card 
+              .credit-card-options 
+                each cardType in ['Visa', 'MasterCard'] 
+                  div(class="form-check-inline") 
+                    input( 
+                      type="radio" 
+                      class="form-check-input" 
+                      name="cardType" 
+                      id="card#{cardType}" 
+                      value=cardType 
+                      checked=(user.card && user.card.name === cardType) 
+                    ) 
+                    label(for="card#{cardType}") #{cardType} 
+
+            // Card Details
+            div(class="form-group") 
+              label(for="creditCardNumber") Card Number 
+              input( 
+                type="text" 
+                class="form-control" 
+                id="creditCardNumber" 
+                name="creditCardNumber" 
+                value=(user.card ? user.card.number : '') 
+                required 
+              ) 
+            div(class="form-row") 
+              div(class="col") 
+                label(for="expMonth") Expiration Month 
+                input( 
+                  type="text" 
+                  class="form-control" 
+                  id="expMonth" 
+                  name="expMonth" 
+                  value=(user.card ? user.card.expMonth : '') 
+                  maxlength="2" 
+                  required 
+                ) 
+              div(class="col") 
+                label(for="expYear") Expiration Year 
+                input( 
+                  type="text" 
+                  class="form-control" 
+                  id="expYear" 
+                  name="expYear" 
+                  value=(user.card ? user.card.expYear : '') 
+                  maxlength="2" 
+                  required 
+                ) 
+              div(class="col") 
+                label(for="cvv") CVV 
+                input( 
+                  type="text" 
+                  class="form-control" 
+                  id="cvv" 
+                  name="cvv" 
+                  value=(user.card ? user.card.cvv : '') 
+                  maxlength="3" 
+                  required 
+                ) 
+            
+
             div(class="form-group")
-              label(for="fullName") Name
+              label(for="couponCode") Coupon Code
               input(
                 type="text"
                 class="form-control"
-                id="fullName"
-                name="fullName"
-                required
+                id="couponCode"
+                name="couponCode"
+                placeholder="Enter your coupon code here"
               )
-            div(class="form-group")
-              label(for="phone") Phone number
-              input(
-                type="text"
-                class="form-control"
-                id="phone"
-                name="phone"
-                required
-              )
-            div(class="form-group")
-              label(for="address") Address
-              input(
-                type="text"
-                class="form-control"
-                id="address"
-                name="address"
-                required
-              )
-            div(class="form-group")
-              button(
-                type="submit"
-                class="btn btn-success btn-block"
+
+            // Submit Button
+            div(class="form-group") 
+              button( 
+                type="submit" 
+                class="btn btn-success btn-block" 
               ) Order

@@ -9,6 +9,7 @@ block main
           form(
             action="/user/register"
             method="POST"
+            novalidate
           )
             // Full Name
             div(class="form-group")
@@ -19,6 +20,8 @@ block main
                 id="fullName"
                 name="fullName"
                 required
+                pattern="^[a-zA-Z\s]+$"
+                title="Full name must contain only letters and spaces."
               )
 
             // Email
@@ -30,6 +33,7 @@ block main
                 id="email"
                 name="email"
                 required
+                title="Please enter a valid email address."
               )
 
             // Password
@@ -41,6 +45,8 @@ block main
                 id="password"
                 name="password"
                 required
+                minlength="8"
+                title="Password must be at least 8 characters."
               )
 
             // Address
@@ -52,6 +58,8 @@ block main
                 id="address"
                 name="address"
                 required
+                minlength="5"
+                title="Address must be at least 5 characters."
               )
 
             // Phone Number
@@ -63,15 +71,38 @@ block main
                 id="phoneNumber"
                 name="phoneNumber"
                 required
+                pattern="^\d{10}$"
+                title="Phone number must be exactly 10 digits."
                 placeholder="Enter your phone number"
               )
 
-            // Credit Card Fields
-            // Accepted Credit Card Images
             div(class="credit-card-accepted")
               h2 Accepted Credit Cards
-              img(src="/css/images/visa.png", alt="Visa", class="credit-card-img")
-              img(src="/css/images/mastercard.png", alt="MasterCard", class="credit-card-img")
+              div(class="credit-card-options")
+                div(class="credit-card-option")
+                  input(
+                    type="radio"
+                    class="form-check-input"
+                    id="visaCard"
+                    name="creditCardType"
+                    value="Visa"
+                    required
+                  )
+                  label(for="visaCard")
+                    img(src="/css/images/visa.png", alt="Visa", class="credit-card-img")
+                    div(class="label-text") Visa
+                div(class="credit-card-option")
+                  input(
+                    type="radio"
+                    class="form-check-input"
+                    id="masterCard"
+                    name="creditCardType"
+                    value="MasterCard"
+                    required
+                  )
+                  label(for="masterCard")
+                    img(src="/css/images/mastercard.png", alt="MasterCard", class="credit-card-img")
+                    div(class="label-text") MasterCard
 
             div(class="form-group credit-card-container")
               label(for="creditCardNumber") Credit Card Number
@@ -83,6 +114,8 @@ block main
                   name="creditCardNumber"
                   maxlength="19"
                   required
+                  pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$"
+                  title="Credit card number must be in the format: 1234 5678 9012 3456"
                   placeholder="1234 5678 9012 3456"
                 )
                 // Expiration Date & CVV
@@ -93,6 +126,8 @@ block main
                     name="expMonth"
                     maxlength="2"
                     required
+                    pattern="^(0[1-9]|1[0-2])$"
+                    title="Expiration month must be in the range 01-12."
                     placeholder="MM"
                   )
                   input(
@@ -101,6 +136,8 @@ block main
                     name="expYear"
                     maxlength="2"
                     required
+                    pattern="^\d{2}$"
+                    title="Expiration year must be 2 digits."
                     placeholder="YY"
                   )
                   input(
@@ -109,6 +146,8 @@ block main
                     name="cvv"
                     maxlength="3"
                     required
+                    pattern="^\d{3}$"
+                    title="CVV must be exactly 3 digits."
                     placeholder="CVV"
                   )
 

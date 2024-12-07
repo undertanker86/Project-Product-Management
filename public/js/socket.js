@@ -1,7 +1,9 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js';
 
 var socket = io();
-
+socket.on('connect', () => {
+  console.log("Socket connected with id:", socket.id); // In socket.id khi kết nối thành công
+});
 
 // Client send message
 const formChat = document.querySelector(".chat .inner-form");
@@ -144,7 +146,27 @@ if(elementListTyping) {
   })
 }
 // End SERVER_RETURN_TYPING
+// Chức năng chat admin
 
+// const chatLink = document.querySelector('.chat-admin');
+// if (chatLink) {
+//     chatLink.addEventListener('click', function (event) {
+//         console.log("Clicked on chat link"); // Kiểm tra click event
+//         event.preventDefault();
+//         console.log("Emitting CLIENT_CHAT_ADMIN"); // Kiểm tra trước khi emit
+//         socket.emit("CLIENT_CHAT_ADMIN", "1");
+//     });
+// }
+const listBtnChatCSR = document.querySelectorAll("[btn-chat-csr]");
+if(listBtnChatCSR.length > 0) {
+  listBtnChatCSR.forEach(button => {
+    button.addEventListener("click", () => {
+      const userIdB = button.getAttribute("btn-chat-csr");
+      // button.closest(".box-user").classList.add("add");
+      socket.emit("CLIENT_CHAT_ADMIN", userIdB);
+    })
+  })
+}
 // Chức năng gửi yêu cầu
 const listBtnAddFriend = document.querySelectorAll("[btn-add-friend]");
 if(listBtnAddFriend.length > 0) {
@@ -157,6 +179,8 @@ if(listBtnAddFriend.length > 0) {
   })
 }
 // Hết Chức năng gửi yêu cầu
+// Chức năng gửi yeu cau admin
+
 
 
 // Chức năng hủy gửi yêu cầu
@@ -199,8 +223,6 @@ if(listBtnAcceptFriend.length > 0) {
   })
 }
 // Hết Chức năng chấp nhận kết bạn
-
-
 
 // SERVER_RETURN_LENGTH_ACCEPT_FRIENDS
 socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS", (data) => {
@@ -313,3 +335,14 @@ socket.on("SERVER_RETURN_STATUS_ONLINE_USER", (data) => {
   }
 })
 // End SERVER_RETURN_STATUS_ONLINE_USER
+
+socket.on("SERVER_RETURN_CREATE_CHATADMIN_FRIENDS", (data) => {
+  console.log(data);
+  window.location.href = `http://localhost:3000/chat/${data.roomChatId}`;
+})
+
+
+socket.on("SERVER_RETURN_EXISTING_CHATADMIN_FRIENDS", (data) => {
+  console.log(data);
+  window.location.href = `http://localhost:3000/chat/${data.roomChatId}`;
+})

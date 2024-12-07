@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-pagination.pug
+
+block main
+  .row
+    .col-12
+      h2 Manage Chats
+      .row.list-friend
+        each item in users
+          .col-6(user-id=item.userId)
+            .box-user
+              .inner-avatar
+                img(
+                  src="https://robohash.org/hicveldicta.png"
+                  alt=item.fullName
+                )
+              .inner-info
+                .inner-name #{item.fullName}
+                .inner-buttons
+                  a.btn.btn-sm.btn-primary.mr-1(
+                    href=`manage-chats/chat/${item.roomChatId}`
+                  ) Chat
+
+
+//-   .row(list-not-friends=user.id)
+//-     each item in users
+//-       .col-6(user-id=item.id)
+//-         div(class="box-user")
+//-           div(class="inner-avatar")
+//-             img(
+//-               src="https://robohash.org/hicveldicta.png"
+//-               alt=item.fullName
+//-             )
+//-           div(class="inner-info")
+//-             div(class="inner-name") #{item.fullName}
+//-             div(class="inner-buttons")
+//-               button(
+//-                 class="btn btn-sm btn-primary mr-1"
+//-                 btn-chat-csr=item.id
+//-               ) Chat CSR

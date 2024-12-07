@@ -170,11 +170,94 @@ module.exports.createProduct = async (req, res) => {
 
 module.exports.createProductPost = async (req, res) => {
     if(res.locals.role.permissions.includes("products_create")){
-        req.body.price = parseInt(req.body.price);
+        console.log(req.body);
+        // Khai bao mang colors va price_colors
+        const name_colors = [];
+        const price_colors = [];
+        const name_capacity = [];
+        const price_capacity = [];
+        const name_repayment = [];
+        const price_repayment = [];
+        console.log(req.body);
+        for (const key in req.body) {
+            if(key.includes("name_color")){
+                name_colors.push(req.body[key]);
+            }
+            if(key.includes("price_color")){
+                price_colors.push(req.body[key]);
+            }
+            if(key.includes("name_capacity")){
+                name_capacity.push(req.body[key]);
+            }
+            if(key.includes("price_capacity")){
+                price_capacity.push(req.body[key]);
+            }
+            if(key.includes("name_repayment")){
+                name_repayment.push(req.body[key]);
+            }
+            if(key.includes("price_repayment")){
+                price_repayment.push(req.body[key]);
+            }
+        }
+        number_free_sms = parseInt(req.body.free_sms);
+        number_free_minutes = parseInt(req.body.free_minutes);
+        number_free_gb = parseInt(req.body.free_gb);
+
+
+        price_sms = parseInt(req.body.free_sms_price);
+        price_minutes = parseInt(req.body.free_minutes_price);
+        price_gb = parseInt(req.body.free_gb_price);
+
+        const free_sms = {
+            number: number_free_sms,
+            price: price_sms
+        }
+        const free_minutes = {
+            number: number_free_minutes,
+            price: price_minutes
+        }
+        const free_gb = {
+            number: number_free_gb,
+            price: price_gb
+        }
+        req.body.free_sms = free_sms;
+        req.body.free_minutes = free_minutes;
+        req.body.free_gb = free_gb;
+
+
+        req.body.freeSMS = free_sms;
+
+
+        req.body.freeMinutes = free_minutes;
+    
+
+        req.body.freeGB = free_gb;
+        
+        // req.body.price = parseInt(req.body.price);
         req.body.discountPercentage = parseInt(req.body.discountPercentage);
         req.body.stock = parseInt(req.body.stock);
-        req.body.createdBy = res.locals.user._id;
+        req.body.createdBy = res.locals.user.id;
         req.body.createdAt = new Date();
+        req.body.colors = name_colors.map((item, index) => {
+            return {
+                name: item,
+                price: price_colors[index]
+            }
+        });
+        req.body.capacities = name_capacity.map((item, index) => {
+            return {
+                name: item,
+                price: price_capacity[index]
+            }
+        });
+        req.body.repayments = name_repayment.map((item, index) => {
+            return {
+                name: item,
+                price: price_repayment[index]
+            }
+        });
+
+
         if(req.body.position){
             req.body.position = parseInt(req.body.position);
         }
@@ -188,6 +271,7 @@ module.exports.createProductPost = async (req, res) => {
         // }
         // console.log(req.body);
         // res.send("ok");
+        console.log(req.body);
         const record = new Product(req.body);
         await record.save(); 
         res.redirect(`/${systemConfig.prefixAdmin}/products`);

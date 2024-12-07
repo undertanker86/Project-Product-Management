@@ -16,22 +16,93 @@ block main
               span Category: 
               a(href=`/products/category/${product.category.slug}`) #{product.category.title}
 
-          if (product.priceNew)
-            div(class="inner-price-new") #{product.priceNew}$
 
-          if (product.price)
-            div(class="inner-price-old") #{product.price}$
-
-          if (product.discountPercentage)
-            div(class="inner-percent") Discount <span>#{product.discountPercentage}%</span>
-
-          if (product.stock)
-            div(class="inner-stock") Stock <span>#{product.stock}</span> product
 
           form(
             action=`/cart/add/${product.id}`
             method="POST"
           )
+            if (product.priceNew)
+              div(class="inner-price-new" id ="priceNew" name = "priceNew") #{product.priceNew}$
+              input(id ="priceNew-2" name = "priceNew" class="form-control" style="display: none;"   value=product.priceNew) 
+            if (product.priceOld)
+              div(class="inner-price-old" id = "priceOld") #{product.priceOld}$
+
+            if (product.discountPercentage)
+              div(class="inner-percent ") Discount <span id = "discountPercentage">#{product.discountPercentage}%</span>
+
+            if (product.stock)
+              div(class="inner-stock") Stock <span>#{product.stock}</span> product
+                    
+                        // Hiển thị lựa chọn màu sắc
+            if (product.colors && product.colors.length > 0)
+              div(class="inner-colors")
+                label Color: 
+                select(id="color-1" name="color" class="form-control")
+                  each color in product.colors
+                    option(value=color.name, data-price=color.price) #{color.name}
+
+            // Hiển thị lựa chọn dung lượng
+            if (product.capacities && product.capacities.length > 0)
+              div(class="inner-capacities")
+                label Capacity: 
+                select(id="capacity-1" name="capacity" class="form-control")
+                  each capacity in product.capacities
+                    option(value=capacity.name, data-price=capacity.price) #{capacity.name}
+
+            // Hiển thị lựa chọn trả góp
+            if (product.repayments && product.repayments.length > 0)
+              div(class="inner-repayments")
+                label Repayment:
+                select(id="repayment-1" name="repayment" class="form-control")
+                  each repayment in product.repayments
+                    option(value=repayment.name, data-price=repayment.price) #{repayment.name} months
+
+            // Hiển thị lựa chọn miễn phí SMS, phút và GB
+            if (product.freeSMS)
+              div(class="inner-free-sms")
+                label Free SMS: 
+                input(
+                  sms-price=product.freeSMS.price
+                  type="number"
+                  id="free-sms"
+                  name="free_sms"
+                  class="form-control"
+                  value=`${product.freeSMS.number}`
+                  min=`${product.freeSMS.number}`
+                  max="12"
+                  onchange="updatePrice()"
+                )
+
+            if (product.freeMinutes)
+              div(class="inner-free-minutes")
+                label Free Minutes: 
+                input(
+                  minutes-price=product.freeMinutes.price
+                  type="number"
+                  id="free-minutes"
+                  name="free_minutes"
+                  class="form-control"
+                  value=`${product.freeMinutes.number}`
+                  min=`${product.freeMinutes.number}`
+                  max="12"
+                  onchange="updatePrice()"
+                )
+
+            if (product.freeGB)
+              div(class="inner-free-gb")
+                label Free GB: 
+                input(
+                  gb-price=product.freeGB.price
+                  type="number"
+                  id="free-gb"
+                  name="free_gb"
+                  class="form-control"
+                  value=`${product.freeGB.number}`
+                  min=`${product.freeGB.number}`
+                  max="12"
+                  onchange="updatePrice()"
+                )
             input(
               class="form-control mb-2"
               type="number"

@@ -30,6 +30,89 @@ block main
           each item in listCategory
             option(value=item.id) #{item.title}
 
+        select(class = "form-group" id = "num-options")
+            option(value="1") 1
+            option(value="2") 2
+            option(value="3") 3
+        div.input-wrapper#input-container
+
+        select(class = "form-group" id = "num-options-2")
+            option(value="1") 1
+            option(value="2") 2
+            option(value="3") 3
+            
+        div.input-wrapper#input-container-2
+      
+        select(class = "form-group" id = "num-options-3")
+            option(value="1") 1
+            option(value="2") 2
+            option(value="3") 3
+            
+        div.input-wrapper#input-container-3
+            div(class="form-group")
+        label(for="free_minutes") Number of Free Minutes
+        input(
+          type="number"
+          class="form-control"
+          id="free_minutes"
+          name="free_minutes"
+          value="0"
+          min="0"
+        )
+        label(for="free_minutes_price") Price for Minutes
+        input(
+          type="number"
+          class="form-control"
+          id="free_minutes_price"
+          name="free_minutes_price"
+          value="0"
+          min="0"
+          required
+        )
+
+      div(class="form-group")
+        label(for="free_sms") Number of Free SMS
+        input(
+          type="number"
+          class="form-control"
+          id="free_sms"
+          name="free_sms"
+          value="0"
+          min="0"
+        )
+        label(for="free_sms_price") Price for SMS
+        input(
+          type="number"
+          class="form-control"
+          id="free_sms_price"
+          name="free_sms_price"
+          value="0"
+          min="0"
+          required
+        )
+
+      div(class="form-group")
+        label(for="free_gb") Number of Free GB
+        input(
+          type="number"
+          class="form-control"
+          id="free_gb"
+          name="free_gb"
+          value="0"
+          min="0"
+        )
+        label(for="free_gb_price") Price for GB
+        input(
+          type="number"
+          class="form-control"
+          id="free_gb_price"
+          name="free_gb_price"
+          value="0"
+          min="0"
+          required
+        )
+
+        
       div(class="form-group form-check form-check-inline")
         input(
           type="radio"

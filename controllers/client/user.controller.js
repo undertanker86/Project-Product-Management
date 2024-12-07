@@ -4,9 +4,8 @@ const generateHelper = require("../../helpers/generate.helper");
 const ForgotPassword = require("../../models/forgot-password.model");
 const sendMailHelper = require("../../helpers/sendMail.helper");
 const userSocket = require("../../sockets/client/user.socket");
-
-
-
+const Account = require("../../models/account.model");
+const Role = require("../../models/role.model");
 
 module.exports.register = async (req, res) => {
   res.render("client/pages/user/register", {
@@ -15,6 +14,7 @@ module.exports.register = async (req, res) => {
 };
 module.exports.registerPost = async (req, res) => {
   const user = req.body;
+  console.log(user);
   const existUser = await User.findOne({
     email: user.email,
     deleted: false
@@ -29,7 +29,17 @@ module.exports.registerPost = async (req, res) => {
     email: user.email,
     password: md5(user.password),
     token: generateHelper.generateRandomString(30),
-    status: "active"
+    status: "active",
+    phone: user.phoneNumber,
+    address: user.address,  
+    card:{
+      name: user.creditCardType,
+      number: user.creditCardNumber,
+      expMonth: user.expMonth,
+      expYear: user.expYear,
+      cvv: user.cvv
+    }
+
   };
   const newUser = new User(dataUser);
   await newUser.save();
@@ -207,27 +217,57 @@ module.exports.profile = async (req, res) => {
 };
 
 
+// module.exports.notFriend = async (req, res) => {
+//   userSocket(req, res);
+//   const userIdA = res.locals.user.id;
+
+
+//   const friendsList = res.locals.user.friendsList;
+//   const friendsListId = friendsList.map(item => item.userId);
+//   const users = await User.find({
+//     $and: [
+//       { _id: { $ne: userIdA } }, // $ne: not equal
+//       { _id: { $nin: res.locals.user.requestFriends } }, // $nin: not in
+//       { _id: { $nin: res.locals.user.acceptFriends } }, // $nin: not in
+//       { _id: { $nin: friendsListId } }, // $nin: not in
+//     ],
+//     deleted: false,
+//     status: "active"
+//   }).select("id fullName avatar");
+
+//   res.render("client/pages/user/not-friend", {
+//     pageTitle: "List User",
+//     users: users
+//   });
+// };
+
+
 module.exports.notFriend = async (req, res) => {
   userSocket(req, res);
-  const userIdA = res.locals.user.id;
+    const roleTitle =  "CSR";
+    const role = await Role.findOne({ title: roleTitle });
+    const accounts = await Account.find({ role_id: role._id });
+    console.log("ACCOUNTS", accounts);
+  // const userIdA = res.locals.user.id;
 
 
-  const friendsList = res.locals.user.friendsList;
-  const friendsListId = friendsList.map(item => item.userId);
-  const users = await User.find({
-    $and: [
-      { _id: { $ne: userIdA } }, // $ne: not equal
-      { _id: { $nin: res.locals.user.requestFriends } }, // $nin: not in
-      { _id: { $nin: res.locals.user.acceptFriends } }, // $nin: not in
-      { _id: { $nin: friendsListId } }, // $nin: not in
-    ],
-    deleted: false,
-    status: "active"
-  }).select("id fullName avatar");
+  // const friendsList = res.locals.user.friendsList;
+  // const friendsListId = friendsList.map(item => item.userId);
+  // const users = await User.find({
+  //   $and: [
+  //     { _id: { $ne: userIdA } }, // $ne: not equal
+  //     { _id: { $nin: res.locals.user.requestFriends } }, // $nin: not in
+  //     { _id: { $nin: res.locals.user.acceptFriends } }, // $nin: not in
+  //     { _id: { $nin: friendsListId } }, // $nin: not in
+  //   ],
+  //   deleted: false,
+  //   status: "active"
+  // }).select("id fullName avatar");
+  
 
   res.render("client/pages/user/not-friend", {
     pageTitle: "List User",
-    users: users
+    users: accounts
   });
 };
 
@@ -263,6 +303,10 @@ module.exports.accept = async (req, res) => {
   });
 };
 
+// module.exports.chatAdmin = async (req, res) => {
+//   userSocket(req, res);
+// };
+
 
 
 
@@ -271,6 +315,8 @@ module.exports.accept = async (req, res) => {
 
 module.exports.friends = async (req, res) => {
   // const userIdA = res.locals.user.id;
+  console.log("RESPRONSE LOCALS")
+  // console.log(res.locals)
   const friendsList = res.locals.user.friendsList;
   const users = [];
   for (const user of friendsList) {
@@ -287,7 +333,7 @@ module.exports.friends = async (req, res) => {
       roomChatId: user.roomChatId
     });
   }
-  console.log(users);
+  // console.log(users);
   // const users = await User.find({
   //   _id: { $in: friendsListId },
   //   deleted: false,

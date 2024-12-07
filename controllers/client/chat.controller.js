@@ -49,7 +49,7 @@ module.exports.index = async (req, res) => {
             _id: chat.userId,
             deleted: false
         });
-        chat.fullName = infoUser.fullName;
+        // chat.fullName = infoUser.fullName;
     }
     res.render("client/pages/chat/index", {
       pageTitle: "Chat",

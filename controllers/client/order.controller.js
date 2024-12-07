@@ -1,35 +1,56 @@
 const Cart = require("../../models/cart.model");
 const Product = require("../../models/product.model");
 const Order = require("../../models/order.model");
+const User = require("../../models/user.model");
 module.exports.index = async (req, res) => {
   const cartId = req.cookies.cartId;
+  const tokenUser= req.cookies.tokenUser;
+  const user = await User.findOne({
+    token: tokenUser
+  });
+  console.log(user);
   const cart = await Cart.findOne({
     _id: cartId
   });
+
   const products = cart.products;
   let total = 0;
-  for (const item of products) {
+  for(const item of products) {
     const infoItem = await Product.findOne({
       _id: item.productId,
       deleted: false,
       status: "active"
     });
-    item.thumbnail = infoItem.thumbnail;
+    item.thumbnail = infoItem.thumbnail;  
     item.title = infoItem.title;
+    // item.price = infoItem.price;
     item.slug = infoItem.slug;
-    item.priceNew = infoItem.price;
-    if(infoItem.discountPercentage > 0) {
-      item.priceNew = (1 - infoItem.discountPercentage/100) * infoItem.price;
-      item.priceNew = item.priceNew.toFixed(0);
-    }
-    item.total = item.priceNew * item.quantity;
-    total += item.total;
   }
+  let description = [];
+  let i = 0;
+  for(const item of products) {
+    description[i] = `Color: ${item.color}<br>
+                      Capacity: ${item.capacity}<br>
+                      Repayment: ${item.repayment}<br>
+                      Free-SMS: ${item.freeSMS}<br>
+                      Free-Minutes: ${item.freeMinutes}<br>
+                      Free-GB: ${item.freeGB}`;
+
+    item.total = item.priceNew * item.quantity;
+    console.log(item.total);
+    total += item.total;
+    i++;
+  }
+  // console.log(description[0]);
+  
   res.render("client/pages/order/index", {
     pageTitle: "Order",
     products: products,
-    total: total
+    total: total,
+    description: description,
+    user: user
   });
+
 };
 module.exports.orderPost = async (req, res) => {
   const cartId = req.cookies.cartId;

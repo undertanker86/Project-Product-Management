@@ -7,7 +7,7 @@ header.header
             </button>
             <div class="inner-logo">
                 <a href="/">
-                    <img src="/css/images/logo.svg" alt="Monitor">
+                    <img src="/css/images/BETA_1.png" alt="Monitor">
                 </a>
             </div>
             <nav class="inner-menu">
@@ -24,7 +24,7 @@ header.header
                         <a href="/cart">Cart (#{miniCart})</a>
                     </li>
                     <li>
-                        <a href="#">Chat</a>
+                        <a href="/user/chatAdmin" class = "chat-admin">Chat</a>
                     </li>
                 </ul>
             </nav>
@@ -39,10 +39,12 @@ header.header
             if(user)
               li
                 a(href="/user/profile") #{user.fullName}
-              li
-                a(href="/user/friends") Friends
+                
               li
                 a(href="/user/logout") Logout
+              li
+                a(href="/user/friends") Friends
+
             else
                 <div class="inner-button">
                     <a href="/user/login" class="button">Login</a>
