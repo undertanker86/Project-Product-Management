@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-pagination.pug
+
+block main
+    h1 Orders of User #{userId}
+    
+    if orders.length > 0
+        table.table.table-bordered.table-hover
+            thead.thead-dark
+                tr
+                    th Order ID
+                    th Products
+                    th Quantity
+                    th Total Amount
+                    th Status
+                    th Created At
+                    th Description
+            tbody
+                each order, index in orders
+                    tr
+                        td #{order._id}
+                        td
+                            ul.mb-0
+                                each product in order.products
+                                    li #{product.title} (x#{product.quantity})
+                        td #{order.products.reduce((acc, product) => acc + product.quantity, 0)}
+                        td #{order.total.toLocaleString()} VND
+                        td #{order.status}
+                        td #{new Date(order.createdAt).toLocaleDateString()}
+                                    td  
+                                         each product, index2 in order.products
+                                            if description && description[index2]
+                                                 li
+                                                    != description[index2]
+                                            else
+                                                p No Description Available
+    else
+        p No orders found for this user.

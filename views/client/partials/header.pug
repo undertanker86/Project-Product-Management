@@ -24,7 +24,7 @@ header.header
                         <a href="/cart">Cart (#{miniCart})</a>
                     </li>
                     <li>
-                        <a href="/user/chatAdmin" class = "chat-admin">Chat</a>
+                        <a href="/user/not-friend" class = "chat-admin">Chat</a>
                     </li>
                 </ul>
             </nav>
@@ -37,13 +37,13 @@ header.header
                 </form>
             </div>
             if(user)
-              li
+              li.profile-item.box-style
                 a(href="/user/profile") #{user.fullName}
                 
-              li
+              li.logout-item.box-style
                 a(href="/user/logout") Logout
-              li
-                a(href="/user/friends") Friends
+            //-   li
+            //-     a(href="/user/friends") Friends
 
             else
                 <div class="inner-button">

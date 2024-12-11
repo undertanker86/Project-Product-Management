@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-pagination.pug
+
+block main
+  if(role.permissions.includes('products_create'))
+    h1= pageTitle
+
+    form(action="/admin/products/create/deal", method="POST")
+      // Nhóm phần nhập Title
+      div.form-group
+        label(for="title") Title
+        input(type="text", id="title", name="title", required, class="form-control")
+
+      // Nhóm phần nhập Description
+      div.form-group
+        label(for="description") Description
+        textarea(id="description", name="description", required, class="form-control")
+
+      // Nhóm phần nhập Discount Percentage
+      div.form-group
+        label(for="discountPercentage") Discount Percentage
+        input(type="number", id="discountPercentage", name="discountPercentage", min="0", max="100", required, class="form-control")
+
+      // Hiển thị tất cả sản phẩm (Packages)
+      h3.packages-title Packages
+      div.products-list
+        each product in products
+          div.product-item
+            // Input không thể chỉnh sửa để hiển thị tên sản phẩm
+            div.product-name
+              input(type="text", value=product.title, readonly=true, disabled=true, class="form-control-plaintext")
+
+            // Nhập số lượng sản phẩm
+            div.product-quantity
+              span Quantity:
+              input(type="number", id=product._id, name= product._id, value="0", min="0", step="1", class="form-control")
+
+      // Nút tạo deal
+      div.form-group
+        button(type="submit", class="btn btn-primary") Create Deal

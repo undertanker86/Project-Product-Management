@@ -17,7 +17,7 @@ block main
                 th Description 
                 th Price 
                 th Quantity 
-                th Total 
+                //- th Total 
             tbody 
               each item, index in products 
                 tr 
@@ -29,7 +29,7 @@ block main
                     !=description[index] 
                   td #{item.priceNew}$ 
                   td #{item.quantity} 
-                  td #{total.toLocaleString()}$ 
+                  //- td #{total.toLocaleString()}$ 
           h3(class="text-right" id = "total-price-discount") Total Orders: #{total.toLocaleString()}$ 
     .row 
       .col-12 
@@ -74,7 +74,7 @@ block main
                 value=user.address 
               ) 
             
-            // Credit Card Section
+      
             div(class="form-group") 
               label Credit Card 
               .credit-card-options 
@@ -86,7 +86,7 @@ block main
                       name="cardType" 
                       id="card#{cardType}" 
                       value=cardType 
-                      checked=(user.card && user.card.name === cardType) 
+                      checked=(user.card.name === cardType) 
                     ) 
                     label(for="card#{cardType}") #{cardType} 
 
@@ -145,6 +145,20 @@ block main
                 id="couponCode"
                 name="couponCode"
                 placeholder="Enter your coupon code here"
+              )
+              input(
+                type="text"
+                class="form-control"
+                name="products"
+                style="display: none;"
+                value = products
+              )
+              input(
+                value = total
+                type="text"
+                class="form-control"
+                name="total"
+                style="display: none;"
               )
 
             // Submit Button

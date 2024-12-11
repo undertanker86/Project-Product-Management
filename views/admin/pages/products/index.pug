@@ -60,7 +60,9 @@ block main
                                     ) Apply
                     if(role.permissions.includes('products_create'))
                         .col-6.text-right
-                            a(href=`/${prefixAdmin}/products/create` class="btn btn-outline-success") Create Product
+                            a(href=`/${prefixAdmin}/products/create` class="btn btn-outline-success") Create Packages
+                        .col-12.text-right
+                            a(href=`/${prefixAdmin}/products/create/deal` class="btn btn-outline-success") Create Deals
 
                 table.table.table-hover.table-sm
                     thead

@@ -2,28 +2,71 @@ extends ../../layouts/default.pug
 include ../../mixins/box-filter.pug
 block main
   if(role.permissions.includes('products_view'))
+    // Title
     if (product.title)
       h1(class="mb-4") #{product.title}
-    if (product.price)
-      div(class="mb-4") Price: <b>#{product.price}$</b>
-    if (product.discountPercentage)
-      div(class="mb-4") Discount: <b>#{product.discountPercentage}%</b>
-    if (product.stock)
-      div(class="mb-4") Stocks: <b>#{product.stock}</b>
+        // Thumbnail Image
     if (product.thumbnail)
       div(class="mb-4")
-        img(
-          src=product.thumbnail
-          style="width: 100px"
-        )
-    if (product.status)
+        img(src=product.thumbnail style="width: 100px")
+        // Discount and Stock
+    div(class="product-discount-stock")
+      if (product.discountPercentage)
+        div(class="mb-4")
+          b Discount: #{product.discountPercentage}%
+      if (product.stock)
+        div(class="mb-4")
+          b Quantity: #{product.stock}
+
+
+
+    // Product Info
+    div(class="product-info")
+      // Color
+      if (product.colors)
+        div(class="mb-4")
+          b Color:
+          each color in product.colors
+            p #{color.name} - #{color.price} $
+
+      // Capacity / Speed
+      if (product.capacities)
+        div(class="mb-4")
+          b Capacity/Speed:
+          each capacity in product.capacities
+            p #{capacity.name} - #{capacity.price} $
+
+      // Repayment Options
+      if (product.repayments)
+        div(class="mb-4")
+          b Repayment:
+          each repayment in product.repayments
+            p #{repayment.name} - #{repayment.price} $
+
+      // Free Features
+      if (product.freeMinutes || product.freeSMS || product.freeGB)
+        div(class="mb-4")
+          b Free Features:
+          if (product.freeMinutes)
+            p Free Minutes: #{product.freeMinutes.number} months - #{product.freeMinutes.price} $
+          if (product.freeSMS)
+            p Free SMS: #{product.freeSMS.number} months - #{product.freeSMS.price} $
+          if (product.freeGB)
+            p Free GB: #{product.freeGB.number} months - #{product.freeGB.price} $
+
+    // Featured Status
+    if (product.featured !== undefined)
       div(class="mb-4")
-        span Status:
-        if (product.status === "active")
-          span(class="badge badge-success") Active
+        b Featured:
+        if (product.featured == 1)
+          span(class="badge badge-primary") Outstanding
         else
-          span(class="badge badge-danger") Inactive
-    if (product.position)
-      div(class="mb-4") Position: <b>#{product.position}</b>
+          span(class="badge badge-secondary") Not Outstanding
+
+    // Description
     if (product.description)
-      div(class="mb-4") !{product.description}
+      div(class="mb-4")
+        b Description:
+        div(class="product-description") !{product.description}
+
+

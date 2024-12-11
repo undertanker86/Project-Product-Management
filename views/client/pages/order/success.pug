@@ -37,9 +37,10 @@ block main
                   th Index
                   th Image
                   th Title
+                  th Description
                   th Price
                   th Quantity
-                  th Total
+                  //- th Total
               tbody
                 each item, index in order.products
                   tr
@@ -48,8 +49,10 @@ block main
                       img(src=item.thumbnail, alt=item.title width="80px")
                     td
                       a(href=`/products/detail/${item.slug}`) #{item.title}
+                    td 
+                      != description[index]
                     td #{item.priceNew}$
                     td #{item.quantity}
-                    td #{item.total.toLocaleString()}$
+                    //- td #{item.total.toLocaleString()}$
             
-            h3(class="text-right") Total order: #{total.toLocaleString()}$
+            h3(class="text-right") Total order: #{order.total}

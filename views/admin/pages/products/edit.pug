@@ -15,9 +15,10 @@ block main
           class="form-control"
           id="title"
           name="title"
-          required
           value=product.title
+          required
         )
+
       div(class="form-group")
         label(for="category_id") Category
         select(
@@ -27,9 +28,65 @@ block main
         )
           option(value="") -- Select category --
           each item in listCategory
-            option(value=item.id
-              selected=(item.id == product.category_id ? true : false)
-            ) #{item.title}
+            option(value=item.id selected=(item.id.toString() == product.category_id.toString())) #{item.title}
+
+      div(class="form-group")
+        label(for="free_minutes") Months of Free Minutes
+        input(
+          type="number"
+          class="form-control"
+          id="free_minutes"
+          name="free_minutes"
+          value=product.freeMinutes.number
+        )
+        label(for="free_minutes_price") Price for Minutes
+        input(
+          type="number"
+          class="form-control"
+          id="free_minutes_price"
+          name="free_minutes_price"
+          value=product.freeMinutes.price
+          required
+        )
+
+      div(class="form-group")
+        label(for="free_sms") Months of Free SMS
+        input(
+          type="number"
+          class="form-control"
+          id="free_sms"
+          name="free_sms"
+          value=product.freeSMS.number
+        )
+        label(for="free_sms_price") Price for SMS
+        input(
+          type="number"
+          class="form-control"
+          id="free_sms_price"
+          name="free_sms_price"
+          value=product.freeSMS.price
+          required
+        )
+
+      div(class="form-group")
+        label(for="free_gb") Months of Free GB
+        input(
+          type="number"
+          class="form-control"
+          id="free_gb"
+          name="free_gb"
+          value=product.freeGB.number
+        )
+        label(for="free_gb_price") Price for GB
+        input(
+          type="number"
+          class="form-control"
+          id="free_gb_price"
+          name="free_gb_price"
+          value=product.freeGB.price
+          required
+        )
+
       div(class="form-group form-check form-check-inline")
         input(
           type="radio"
@@ -37,7 +94,7 @@ block main
           id="featured1"
           name="featured"
           value="1"
-          checked=(product.featured == "1" ? true : false)
+          checked=(product.featured == 1)
         )
         label(for="featured1" class="form-check-label") Outstanding
       div(class="form-group form-check form-check-inline")
@@ -47,9 +104,10 @@ block main
           id="featured0"
           name="featured"
           value="0"
-          checked=(product.featured == "0" ? true : false) 
+          checked=(product.featured == 0)
         )
         label(for="statusInActive" class="form-check-label") Not Outstanding
+
       div(class="form-group")
         label(for="desc") Description
         textarea(
@@ -57,18 +115,8 @@ block main
           id="desc"
           name="description"
           rows="5"
-          textarea-mce
-        ) #{product.description}
-      div(class="form-group")
-        label(for="price") Price
-        input(
-          type="number"
-          class="form-control"
-          id="price"
-          name="price"
-          value=product.price
-          min="0"
-        )
+        )= product.description
+
       div(class="form-group")
         label(for="discount") % Discount
         input(
@@ -77,8 +125,8 @@ block main
           id="discount"
           name="discountPercentage"
           value=product.discountPercentage
-          min="0"
         )
+
       div(class="form-group")
         label(for="stock") Quantity
         input(
@@ -87,8 +135,8 @@ block main
           id="stock"
           name="stock"
           value=product.stock
-          min="0"
         )
+
       div(class="form-group" upload-image)
         label(for="thumbnail") Image
         input(
@@ -97,13 +145,14 @@ block main
           id="thumbnail"
           name="thumbnail"
           accept="image/*"
-          upload-image-input
         )
-        img(
-          src=product.thumbnail
-          class="image-preview"
-          upload-image-preview
-        )
+        if product.thumbnail
+          img(
+            src=product.thumbnail
+            class="img-preview"
+            width="150"
+          )
+
       div(class="form-group")
         label(for="position") Position
         input(
@@ -111,10 +160,9 @@ block main
           class="form-control"
           id="position"
           name="position"
-          placeholder="Auto increase"
-          min="1"
           value=product.position
         )
+
       div(class="form-group form-check form-check-inline")
         input(
           type="radio"
@@ -122,7 +170,7 @@ block main
           id="statusActive"
           name="status"
           value="active"
-          checked=(product.status == "active" ? true : false)
+          checked=(product.status == 'active')
         )
         label(for="statusActive" class="form-check-label") Active
       div(class="form-group form-check form-check-inline")
@@ -132,11 +180,12 @@ block main
           id="statusInActive"
           name="status"
           value="inactive"
-          checked=(product.status == "inactive" ? true : false)
+          checked=(product.status == 'inactive')
         )
         label(for="statusInActive" class="form-check-label") Inactive
+
       div(class="form-group")
         button(
           type="submit"
-          class="btn btn-primary"
-        ) Edit
+          class="btn btn-success"
+        ) Save Changes

@@ -32,7 +32,7 @@ block main
               div(class="inner-percent ") Discount <span id = "discountPercentage">#{product.discountPercentage}%</span>
 
             if (product.stock)
-              div(class="inner-stock") Stock <span>#{product.stock}</span> product
+              div(class="inner-stock") Stock <span>#{product.stock}</span> package
                     
                         // Hiển thị lựa chọn màu sắc
             if (product.colors && product.colors.length > 0)
@@ -61,7 +61,7 @@ block main
             // Hiển thị lựa chọn miễn phí SMS, phút và GB
             if (product.freeSMS)
               div(class="inner-free-sms")
-                label Free SMS: 
+                label Free SMS (Months): 
                 input(
                   sms-price=product.freeSMS.price
                   type="number"
@@ -76,7 +76,7 @@ block main
 
             if (product.freeMinutes)
               div(class="inner-free-minutes")
-                label Free Minutes: 
+                label Free Minutes (Months): 
                 input(
                   minutes-price=product.freeMinutes.price
                   type="number"
@@ -91,7 +91,7 @@ block main
 
             if (product.freeGB)
               div(class="inner-free-gb")
-                label Free GB: 
+                label Free GB (Months): 
                 input(
                   gb-price=product.freeGB.price
                   type="number"
@@ -103,8 +103,10 @@ block main
                   max="12"
                   onchange="updatePrice()"
                 )
+            label Quantity: 
             input(
               class="form-control mb-2"
+              id = "quantity-1"
               type="number"
               name="quantity"
               value="1"

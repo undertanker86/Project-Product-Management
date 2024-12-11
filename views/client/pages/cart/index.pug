@@ -5,9 +5,13 @@ block main
     .row
       .col-12
         +box-head("Cart")
-    .row
+    .row(class= "cart order")
       .col-12
+                // Thêm thông báo deal hời
+      
       if(products.length > 0)
+          .alert.alert-info.mt-3
+            | Add 2 OnlyiPhone 14 packages to your cart when checking out and you will automatically receive 10% deduction.
           table(class="table table-bordered" table-cart)
             thead
               tr
@@ -29,7 +33,7 @@ block main
                     a(href=`/products/detail/${item.slug}`) #{item.title}
                   td 
                     != description[index]
-                  td #{item.priceNew}$
+                  td #{item.priceNew}$ 
                   td
                     input(
                       type="number"
@@ -45,10 +49,11 @@ block main
                       href=`/cart/delete/${item.productId}/${item.priceNew}`
                       class="btn btn-danger"
                     ) Delete
+        
+          h3(class="text-right") Total orders: #{total.toLocaleString()}$ include #{mes_discount}
           
-          h3(class="text-right") Total orders: #{total.toLocaleString()}$
-          
-          div(class="text-right mt-3")
+        
+          div(class="text-right ml-3")
             a(href="/order" class="btn btn-success") Order now
       else 
           h3(class="text-center") Cart is empty

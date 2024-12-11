@@ -20,6 +20,11 @@ router.get(
     userMiddleware.requireAuth,
     controller.profile
   );
+router.post(
+    "/profile",
+    userMiddleware.requireAuth,
+    controller.profilePost
+  );
 router.get("/not-friend", userMiddleware.requireAuth, controller.notFriend);
 router.get("/request", userMiddleware.requireAuth, controller.request);
 router.get("/accept", userMiddleware.requireAuth, controller.accept);

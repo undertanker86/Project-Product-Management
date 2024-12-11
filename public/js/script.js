@@ -79,8 +79,10 @@ function updatePrice() {
     if (color) {
         newPrice = 0;
         newOld = 0;
-        newPrice = newPrice - (newPrice * discountPercentage / 100);
-        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
+        // newPrice = newPrice - (newPrice * discountPercentage / 100);
+        let repaymentMonths = parseInt(repayment.options[repayment.selectedIndex].value) || 1; 
+
+        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price) * repaymentMonths;
         newOld += parseFloat(capacity.options[capacity.selectedIndex].dataset.price);
         newOld += parseFloat(color.options[color.selectedIndex].dataset.price);
         let freeSmsQuantity = parseInt(document.getElementById('free-sms').value) || 0;
@@ -98,10 +100,11 @@ function updatePrice() {
         newPrice = 0;
         newOld = 0;
 
+        let repaymentMonths = parseInt(repayment.options[repayment.selectedIndex].value) || 1; 
 
-        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
+        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price) * repaymentMonths;
         newOld += parseFloat(capacity.options[capacity.selectedIndex].dataset.price);
-        newOld += parseFloat(color.options[color.selectedIndex].dataset.price);
+        newOld += parseFloat(color.options[color.selectedIndex].dataset.price) ;
         let freeSmsQuantity = parseInt(document.getElementById('free-sms').value) || 0;
         let freeSmsPrice = parseFloat(freeSMS.getAttribute("sms-price")) || 0; 
         newOld += freeSmsPrice * freeSmsQuantity;
@@ -117,7 +120,10 @@ function updatePrice() {
         newPrice = 0;
         newOld = 0;
 
-        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
+        let repaymentMonths = parseInt(repayment.options[repayment.selectedIndex].value) || 1; 
+
+        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price) * repaymentMonths;
+ 
         newOld += parseFloat(capacity.options[capacity.selectedIndex].dataset.price);
         newOld += parseFloat(color.options[color.selectedIndex].dataset.price);
         let freeSmsQuantity = parseInt(document.getElementById('free-sms').value) || 0;
@@ -135,7 +141,10 @@ function updatePrice() {
         console.log("OK");
         newPrice = 0;
         newOld = 0;
-        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
+        let repaymentMonths = parseInt(repayment.options[repayment.selectedIndex].value) || 1; 
+
+        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price) * repaymentMonths;
+        // newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
         newOld += parseFloat(capacity.options[capacity.selectedIndex].dataset.price);
         newOld += parseFloat(color.options[color.selectedIndex].dataset.price);
         let freeSmsQuantity = parseInt(document.getElementById('free-sms').value) || 0;
@@ -152,7 +161,10 @@ function updatePrice() {
     if(freeMinutes){
         newPrice = 0;
         newOld = 0;
-        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
+        let repaymentMonths = parseInt(repayment.options[repayment.selectedIndex].value) || 1; 
+
+        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price) * repaymentMonths;
+        // newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
         newOld += parseFloat(capacity.options[capacity.selectedIndex].dataset.price);
         newOld += parseFloat(color.options[color.selectedIndex].dataset.price);
         let freeSmsQuantity = parseInt(document.getElementById('free-sms').value) || 0;
@@ -169,7 +181,10 @@ function updatePrice() {
     if(freeGB){
         newPrice = 0;
         newOld = 0;
-        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
+        let repaymentMonths = parseInt(repayment.options[repayment.selectedIndex].value) || 1; 
+
+        newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price) * repaymentMonths;
+        // newOld += parseFloat(repayment.options[repayment.selectedIndex].dataset.price);
         newOld += parseFloat(capacity.options[capacity.selectedIndex].dataset.price);
         newOld += parseFloat(color.options[color.selectedIndex].dataset.price);
         let freeSmsQuantity = parseInt(document.getElementById('free-sms').value) || 0;
@@ -212,4 +227,51 @@ if(couponCode){
     }
   });
       
+    }
+
+const sortSelect = document.querySelector('[sort-select]');
+    if(sortSelect){
+        let url = new URL(location.href); // Duplicate url
+        sortSelect.addEventListener('change', function(){
+            const value = sortSelect.value;
+            if(value){
+                const [sortKey, sortValue] = value.split('-');
+                url.searchParams.set('sortKey', sortKey);
+                url.searchParams.set('sortValue', sortValue);
+                
+            } else{
+                url.searchParams.delete('sortKey');
+                url.searchParams.delete('sortValue');
+            }
+            location.href = url;
+        });
+    
+        const sortKeyCurrent = url.searchParams.get('sortKey');
+        const sortValueCurrent = url.searchParams.get('sortValue');
+        if(sortKeyCurrent && sortValueCurrent){
+            sortSelect.value = `${sortKeyCurrent}-${sortValueCurrent}`;
+        }
+    }
+
+const listButtonPagination = document.querySelectorAll('[button-pagination]');
+    if(listButtonPagination.length > 0){
+        let url = new URL(location.href);
+        listButtonPagination.forEach(button => {
+            button.addEventListener('click', function(){
+                const value = button.getAttribute('button-pagination');
+                if(value){
+                    url.searchParams.set('page', value);
+                } else{
+                    url.searchParams.delete('page');
+                }
+                location.href = url.href; 
+    
+            })
+        })
+    
+            const pageCurrent = url.searchParams.get("page") || 1;
+            const buttonCurrent = document.querySelector(`[button-pagination="${pageCurrent}"]`);
+            if(buttonCurrent) {
+                buttonCurrent.parentElement.classList.add("active");
+            }
     }

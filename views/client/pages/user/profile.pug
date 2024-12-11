@@ -1,8 +1,154 @@
 extends ../../layouts/default.pug
-include ../../mixins/box-head.pug
+
 block main
-  .container.my-3
-    .row
-      .col-12
-        +box-head(pageTitle)
-    div #{user}
+  .container.my-5
+    .row.justify-content-center
+      .col-8
+        h1(class="text-center") Edit Profile
+        form(
+          action="/user/profile"
+          method="POST"
+          novalidate
+        )
+          // Full Name
+          div(class="form-group")
+            label(for="fullName") Full name
+            input(
+              type="text"
+              class="form-control"
+              id="fullName"
+              name="fullName"
+              value= user.fullName
+              required
+              pattern="^[a-zA-Z\s]+$"
+              title="Full name must contain only letters and spaces."
+            )
+
+          // Email
+          div(class="form-group")
+            label(for="email") Email
+            input(
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              value= user.email
+              required
+              title="Please enter a valid email address."
+            )
+
+          // Address
+          div(class="form-group")
+            label(for="address") Address
+            input(
+              type="text"
+              class="form-control"
+              id="address"
+              name="address"
+              value= user.address
+              required
+              minlength="5"
+              title="Address must be at least 5 characters."
+            )
+
+          // Phone Number
+          div(class="form-group")
+            label(for="phoneNumber") Phone Number
+            input(
+              type="tel"
+              class="form-control"
+              id="phoneNumber"
+              name="phoneNumber"
+              value=user.phone
+              required
+              pattern="^\d{10}$"
+              title="Phone number must be exactly 10 digits."
+            )
+
+          // Credit Card Type
+          div(class="credit-card-accepted")
+            h2 Accepted Credit Cards
+            div(class="credit-card-options")
+              div(class="credit-card-option")
+                input(
+                  type="radio"
+                  class="form-check-input"
+                  id="visaCard"
+                  name="creditCardType"
+                  value="Visa"
+                  checked=user.card.name === 'Visa'
+                )
+                label(for="visaCard")
+                  img(src="/css/images/visa.png", alt="Visa", class="credit-card-img")
+                  div(class="label-text") Visa
+              div(class="credit-card-option")
+                input(
+                  type="radio"
+                  class="form-check-input"
+                  id="masterCard"
+                  name="creditCardType"
+                  value="MasterCard"
+                  checked=user.card.name === 'MasterCard'
+                )
+                label(for="masterCard")
+                  img(src="/css/images/mastercard.png", alt="MasterCard", class="credit-card-img")
+                  div(class="label-text") MasterCard
+
+          // Credit Card Number
+          div(class="form-group credit-card-container")
+            label(for="creditCardNumber") Credit Card Number
+            input(
+              type="text"
+              class="form-control"
+              id="creditCardNumber"
+              name="creditCardNumber"
+              value=user.card.number
+              maxlength="19"
+              required
+              pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$"
+              title="Credit card number must be in the format: 1234 5678 9012 3456"
+              placeholder="1234 5678 9012 3456"
+            )
+
+          // Expiration Date & CVV
+          div(class="expiration-cvv")
+            input(
+              type="text"
+              class="form-control exp-month"
+              name="expMonth"
+              value= user.card.expMonth
+              maxlength="2"
+              required
+              pattern="^(0[1-9]|1[0-2])$"
+              title="Expiration month must be in the range 01-12."
+              placeholder="MM"
+            )
+            input(
+              type="text"
+              class="form-control exp-year"
+              name="expYear"
+              value=user.card.expYear
+              maxlength="2"
+              required
+              pattern="^\d{2}$"
+              title="Expiration year must be 2 digits."
+              placeholder="YY"
+            )
+            input(
+              type="text"
+              class="form-control cvv"
+              name="cvv"
+              value=user.card.cvv
+              maxlength="3"
+              required
+              pattern="^\d{3}$"
+              title="CVV must be exactly 3 digits."
+              placeholder="CVV"
+            )
+
+          // Submit Button
+          div(class="form-group")
+            button(
+              type="submit"
+              class="btn btn-primary btn-block"
+            ) Save Changes

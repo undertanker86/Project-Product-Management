@@ -1,7 +1,7 @@
 const Chat = require("../../models/chat.model");
 const User = require("../../models/user.model");
 const streamUploadHelper = require('../../helpers/streamUpload.helper');
-
+const Account = require("../../models/account.model");
 module.exports.index = async (req, res) => {
     _io.once('connection', (socket) => {
         // Client send message to server
@@ -45,7 +45,7 @@ module.exports.index = async (req, res) => {
     })
     
     for(const chat of chats){
-        const infoUser = await User.findOne({
+        const infoUser = await Account.findOne({
             _id: chat.userId,
             deleted: false
         });

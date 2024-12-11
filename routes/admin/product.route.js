@@ -35,4 +35,6 @@ router.post('/create',
 router.get('/edit/:id', controller.editProduct);
 router.patch('/edit/:id', upload.single('thumbnail') ,uploadCloud.uploadSingle, validate.createProductPost ,controller.editProductPatch);
 router.get('/detail/:id', controller.detailProduct);
+router.get('/create/deal', controller.createDeal);
+router.post('/create/deal', controller.createDealPost);
 module.exports = router;

@@ -22,14 +22,27 @@ module.exports.index = async (req, res) => {
       }
     });
   });
+ 
 
   // Loại bỏ các user trùng lặp
   const uniqueUsers = [...new Set(usersInRooms)];
+  console.log("Users in rooms:", uniqueUsers);
+  const users =  await User.find({
+    _id: { $in: uniqueUsers.map(user => user.userId) },
+    deleted: false,
+    status: "active"
+  })
+  for (i = 0; i < uniqueUsers.length; i++) {
 
+    uniqueUsers[i].fullName = users[i].fullName;
+      }
   console.log("Unique users:", uniqueUsers);
+
+  // console.log("Unique users:", uniqueUsers);
     res.render("admin/pages/manage-chats/index", {
       pageTitle: "Manage",
-      users: uniqueUsers
+      users: uniqueUsers,
+      // usersName: users
     });
     
 }
@@ -77,11 +90,11 @@ const chats = await Chat.find({
 })
 
 for(const chat of chats){
-    const infoUser = await Account.findOne({
+    const infoUser = await User.findOne({
         _id: chat.userId,
         deleted: false
     });
-    // chat.fullName = infoUser.fullName;
+    chat.fullName = infoUser.fullName;
 }
   res.render("admin/pages/manage-chats/chat", {
     pageTitle: "Chat",

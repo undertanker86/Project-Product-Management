@@ -3,6 +3,7 @@ const systemConfig = require("../../config/system");
 const ProductCategory = require("../../models/product-catergory.model.js");
 const Account = require("../../models/account.model");
 const moment = require("moment");
+const Deal = require("../../models/deal.model");
 module.exports.index = async (req, res) => {
     const find = {
         deleted: false,
@@ -303,6 +304,39 @@ module.exports.editProduct = async (req, res) => {
 module.exports.editProductPatch = async (req, res) => {
     if(res.locals.role.permissions.includes("products_edit")){
         const id =  req.params.id;
+        number_free_sms = parseInt(req.body.free_sms);
+        number_free_minutes = parseInt(req.body.free_minutes);
+        number_free_gb = parseInt(req.body.free_gb);
+
+
+        price_sms = parseInt(req.body.free_sms_price);
+        price_minutes = parseInt(req.body.free_minutes_price);
+        price_gb = parseInt(req.body.free_gb_price);
+
+        const free_sms = {
+            number: number_free_sms,
+            price: price_sms
+        }
+        const free_minutes = {
+            number: number_free_minutes,
+            price: price_minutes
+        }
+        const free_gb = {
+            number: number_free_gb,
+            price: price_gb
+        }
+        req.body.free_sms = free_sms;
+        req.body.free_minutes = free_minutes;
+        req.body.free_gb = free_gb;
+
+
+        req.body.freeSMS = free_sms;
+
+
+        req.body.freeMinutes = free_minutes;
+    
+
+        req.body.freeGB = free_gb;
         req.body.price = parseInt(req.body.price);
         req.body.discountPercentage = parseInt(req.body.discountPercentage);
         req.body.stock = parseInt(req.body.stock);
@@ -312,12 +346,6 @@ module.exports.editProductPatch = async (req, res) => {
             req.body.position = parseInt(req.body.position);
         }
         
-        // if(req.file){
-        //     req.body.thumbnail = `/uploads/${req.file.filename}`;
-        // }
-        // const record = new Product(req.body);
-        // await record.save(); 
-        // res.redirect(`/${systemConfig.prefixAdmin}/products`);
         await Product.updateOne(
             {_id: id,
             deleted: false
@@ -345,5 +373,57 @@ module.exports.detailProduct = async (req, res) => {
     })
 }
 
+module.exports.createDeal = async (req, res) => {
+    const products = await Product.find({});
+    console.log(products);
+    res.render("admin/pages/products/create-deal.pug", {
+        pageTitle: "Create deals",
+        products: products
+    });
+}
+module.exports.createDealPost = async (req, res) => {
+    console.log(req.body);  // Xem toàn bộ dữ liệu gửi lên từ form
+
+    // const { title, description, discountPercentage } = req.body;
+    // const quantity = req.body;  // Dữ liệu gửi lên sẽ chứa thông tin về các sản phẩm và số lượng
+
+    // // Tạo danh sách packageIncluded
+    // const packageIncluded = [];
+
+    // // Duyệt qua tất cả các key trong req.body
+    // for (let productId in quantity) {
+    //     // Kiểm tra xem key có phải là ID của sản phẩm (tránh các trường không phải quantity)
+    //     if (quantity.hasOwnProperty(productId) && productId !== 'title' && productId !== 'description' && productId !== 'discountPercentage') {
+    //         const qty = parseInt(quantity[productId]);
+
+    //         // Nếu số lượng sản phẩm lớn hơn 0, thêm vào packageIncluded
+    //         if (qty > 0) {
+    //             // Lấy thông tin sản phẩm từ Product bằng productId
+    //             const product = await Product.findById(productId);
+    //             if (product) {
+    //                 // Thêm vào packageIncluded với cấu trúc { name, quantity }
+    //                 packageIncluded.push({
+    //                     name: product.title,  // Hoặc `product.name` nếu muốn dùng tên khác
+    //                     quantity: qty
+    //                 });
+    //             }
+    //         }
+    //     }
+    // }
+
+    // // Tạo deal mới với thông tin đã xử lý
+    // const newDeal = new Deal({
+    //     title,
+    //     description,
+    //     discountPercentage,
+    //     packageIncluded
+    // });
+
+    // // Lưu deal vào cơ sở dữ liệu
+    // await newDeal.save();
+
+    req.flash('success', 'Create deal success!');
+    res.redirect(`/${systemConfig.prefixAdmin}/products`);
+}
 
 

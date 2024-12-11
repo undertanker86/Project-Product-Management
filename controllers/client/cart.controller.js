@@ -45,6 +45,7 @@ module.exports.addPost = async (req, res) => {
     products: products,
     userId: user.id
   });
+  req.flash("success", "Success add to cart");
   res.redirect("back");
 
 }
@@ -70,6 +71,8 @@ module.exports.index = async (req, res) => {
   }
   let description = [];
   let i = 0;
+  let count_deal = 0;
+  let mes_discount = "";
   for(const item of products) {
     description[i] = `Color: ${item.color}<br>
                       Capacity: ${item.capacity}<br>
@@ -77,19 +80,34 @@ module.exports.index = async (req, res) => {
                       Free-SMS: ${item.freeSMS}<br>
                       Free-Minutes: ${item.freeMinutes}<br>
                       Free-GB: ${item.freeGB}`;
+    if(item.title ==  "iPhone 14 - Phone Only"){
+      if(count_deal == 0 && item.quantity > 1){
+        count_deal = 1;
+        count_deal = item.quantity * count_deal;
 
+      }
+      else{
+        count_deal++;
+      }
+    }
     item.total = item.priceNew * item.quantity;
-    console.log(item.total);
+   
     total += item.total;
     i++;
   }
+  if(count_deal > 1){
+    total = total - (total * 0.1);
+    mes_discount = "- 10% discount";
+  }
+  console.log(count_deal);
   // console.log(description[0]);
   
   res.render("client/pages/cart/index", {
     pageTitle: "Cart",
     products: products,
     total: total,
-    description: description
+    description: description,
+    mes_discount: mes_discount
   });
 }
 

@@ -5,5 +5,33 @@ block main
   .container.my-3
     +box-head(pageTitle)
     .row
-      each item in products
-        +product-item(item)
+
+
+                     
+
+      div(class="section-5__wrap")
+              each item in products
+                  +product-item(item, "product-item--three"
+                  )
+      //- +box-pagination([currentPage, totalPage])
+      .pagination 
+          ul.pagination__list
+              li.pagination__item 
+                  a(href="#" class="pagination__link") 
+                      i(class="fa-solid fa-arrow-left")
+              li.pagination__item 
+                  a(href="#" class="pagination__link pagination__link--active") 1
+              li.pagination__item 
+                  a(href="#" class="pagination__link") 2
+              li.pagination__item 
+                  a(href="#" class="pagination__link") 3
+              li.pagination__item 
+                  a(href="#" class="pagination__link") 4
+              //- li.pagination__item 
+              //-     a(href="#" class="pagination__link") ...
+              //- li.pagination__item 
+              //-     a(href="#" class="pagination__link") 28
+              li.pagination__item 
+                  a(href="#" class="pagination__link") 
+                      i(class="fa-solid fa-arrow-right")
+          

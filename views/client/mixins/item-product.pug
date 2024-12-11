@@ -1,18 +1,17 @@
-mixin product-item(image, title, gender, age, price, nameClass)
+mixin item-product(item, nameClass)
     div(class=`product-item ${nameClass ? nameClass : ""}`)
                         div(class="product-item__image")
                             a(href="#")
-                                img(src=image alt=title)
+                                img(src=item.thumbnail alt=title)
                         div(class="product-item__content")
                             h3(class="product-item__title")
-                                a(href="#") #{title}
+                                a(href="#") #{item.title}
                             div(class="product-item__meta")
                                 div(class="product-item__meta-item")
                                     span Giống:
-                                    strong #{gender}
+                                    strong #{item.title}
                                 div(class="product-item__meta-dot")
                                 div(class="product-item__meta-item")
-                                    span Tuổi:
-                                    strong #{age}
-
-                            div(class="product-item__price") #{price} 
+                                    span Age:
+                                    strong #{item.title}
+                            div(class="product-item__price") #{item.title} 

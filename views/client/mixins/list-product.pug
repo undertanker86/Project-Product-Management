@@ -1,7 +1,6 @@
 //- list-product.pug
 
 mixin list-product(item)
-    .inner-wrap
         .inner-item
             .inner-image
                 a(href=`/products/detail/${item.slug}`)
@@ -17,6 +16,3 @@ mixin list-product(item)
                     .inner-meta-item
                         span Repayment: $ #{item.repayments[0].price} per month
                         strong
-        .inner-button-bottom
-            a.button.button-outline(href="#") Watch More 
-            i.fa-solid.fa-angle-right

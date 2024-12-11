@@ -345,6 +345,12 @@ document.getElementById('num-options-3').addEventListener('change', function(e) 
           container.appendChild(capacityInput);
         }
       });
+
+
+      
+
+
+
     
  
 

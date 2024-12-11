@@ -7,6 +7,6 @@ mixin product-item(item)
       .inner-content
         h3.inner-title
           a(href=`/products/detail/${item.slug}`) #{item.title}
-        .inner-price-new #{item.priceNew}$
-        .inner-price-old #{item.price}$
+        .inner-price-new #{item.priceNew} $ for #{item.repayments[0].name} months
+        .inner-price-old #{item.priceOld} $ for #{item.repayments[0].name} months
         .inner-discount -#{item.discountPercentage}%

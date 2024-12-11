@@ -9,6 +9,7 @@ const settingRoute = require("./setting.route");
 const authMiddleware = require('../../middlewares/admin/auth.middleware.js');
 const orderRoute = require("./order.route.js");
 const chatRoute = require("./manage-chat.route.js");
+const accountUserRoute = require("./account-user.route.js");
 module.exports.index = (app) =>{
     const PATH_ADMIN = `/${systemConfig.prefixAdmin}`;
     app.use(`${PATH_ADMIN}/dashboard`, authMiddleware.requireAuth ,dashBoardRoute);
@@ -25,4 +26,6 @@ module.exports.index = (app) =>{
 
     app.use(`${PATH_ADMIN}/orders`, authMiddleware.requireAuth ,orderRoute);
     app.use(`${PATH_ADMIN}/manage-chats`, authMiddleware.requireAuth ,chatRoute);
+    app.use(`${PATH_ADMIN}/account-users`, authMiddleware.requireAuth ,accountUserRoute);
+
 }

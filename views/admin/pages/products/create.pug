@@ -4,7 +4,7 @@ include ../../mixins/box-pagination.pug
 block main
   if(role.permissions.includes('products_create'))
 
-    h1 #{pageTitle}
+    h1 Create Package
     form(
       action=`/${prefixAdmin}/products/create`
       method="POST"
@@ -29,28 +29,31 @@ block main
           option(value="") -- Select category --
           each item in listCategory
             option(value=item.id) #{item.title}
-
-        select(class = "form-group" id = "num-options")
-            option(value="1") 1
-            option(value="2") 2
-            option(value="3") 3
+      div(class="form-group")
+        label(for="num-options") Color
+        select(class="form-control" id="num-options")
+          option(value="1") 1
+          option(value="2") 2
+          option(value="3") 3
         div.input-wrapper#input-container
 
-        select(class = "form-group" id = "num-options-2")
-            option(value="1") 1
-            option(value="2") 2
-            option(value="3") 3
-            
+      div(class="form-group")
+        label(for="num-options-2") Capacity/ Speed
+        select(class="form-control" id="num-options-2")
+          option(value="1") 1
+          option(value="2") 2
+          option(value="3") 3
         div.input-wrapper#input-container-2
-      
-        select(class = "form-group" id = "num-options-3")
-            option(value="1") 1
-            option(value="2") 2
-            option(value="3") 3
-            
+
+      div(class="form-group")
+        label(for="num-options-3") Repayment
+        select(class="form-control" id="num-options-3")
+          option(value="1") 1
+          option(value="2") 2
+          option(value="3") 3
         div.input-wrapper#input-container-3
             div(class="form-group")
-        label(for="free_minutes") Number of Free Minutes
+        label(for="free_minutes") Months of Free Minutes
         input(
           type="number"
           class="form-control"
@@ -71,7 +74,7 @@ block main
         )
 
       div(class="form-group")
-        label(for="free_sms") Number of Free SMS
+        label(for="free_sms") Months of Free SMS
         input(
           type="number"
           class="form-control"
@@ -92,7 +95,7 @@ block main
         )
 
       div(class="form-group")
-        label(for="free_gb") Number of Free GB
+        label(for="free_gb") Months of Free GB
         input(
           type="number"
           class="form-control"
@@ -143,16 +146,7 @@ block main
           rows="5"
           textarea-mce
         )
-      div(class="form-group")
-        label(for="price") Price
-        input(
-          type="number"
-          class="form-control"
-          id="price"
-          name="price"
-          value="0"
-          min="0"
-        )
+
       div(class="form-group")
         label(for="discount") % Discount
         input(

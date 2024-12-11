@@ -7,6 +7,14 @@ const orderSchema = new mongoose.Schema(
     address: String,
     products: Array,
     status: String,
+    total: Number,
+    card: {
+      name: String,
+      number: String,
+      expMonth: String,
+      expYear: String,
+      cvv: String,
+    },
   },
   {
     timestamps: true,

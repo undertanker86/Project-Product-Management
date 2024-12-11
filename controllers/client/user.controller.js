@@ -6,6 +6,7 @@ const sendMailHelper = require("../../helpers/sendMail.helper");
 const userSocket = require("../../sockets/client/user.socket");
 const Account = require("../../models/account.model");
 const Role = require("../../models/role.model");
+// const sendMailHelper = require("../../helpers/sendMail.helper");
 
 module.exports.register = async (req, res) => {
   res.render("client/pages/user/register", {
@@ -43,9 +44,69 @@ module.exports.registerPost = async (req, res) => {
   };
   const newUser = new User(dataUser);
   await newUser.save();
-  res.cookie("tokenUser", newUser.token);
-  // req.flash("success", "Đăng ký tài khoản thành công!");
-  res.redirect("/");
+  // res.cookie("tokenUser", newUser.token);
+  const subject = "Welcome to Beta – Account Register Successfully!";
+  const htmlText =  `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Created - Welcome to Beta</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+      h2 {
+        color: #007BFF;
+      }
+      .footer {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #007BFF;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <h2>Dear ${user.fullName},</h2>
+  
+    <p>We are pleased to inform you that your account with <strong>Beta</strong> has been successfully created!</p>
+    
+    <p>You can now log in using your email and password to explore our services.</p>
+  
+    <p>If you have any questions or need assistance, feel free to reach out to us at <strong>undertanker86.work@gmail.com</strong>.</p>
+  
+    <a href="http://localhost:3000/user/login" class="btn">Log In to Your Account</a>
+  
+    <br><br>
+    <p>Thank you for choosing <strong>Beta</strong>. We look forward to serving you!</p>
+  
+    <p>Best regards,</p>
+    <p>The Beta Team</p>
+  
+   
+  
+  </body>
+  </html>
+  `;
+
+  sendMailHelper.sendMail(user.email, subject, htmlText);
+  req.flash("success", "Success Register Account!");
+  res.redirect("/user/login");
 };
 
 module.exports.login = async (req, res) => {
@@ -216,6 +277,29 @@ module.exports.profile = async (req, res) => {
   });
 };
 
+module.exports.profilePost = async (req, res) => {
+  const user = req.body;
+  const tokenUser = req.cookies.tokenUser;
+  await User.updateOne({
+    token: tokenUser,
+    status: "active",
+    deleted: false
+  }, {
+    fullName: user.fullName,
+    email: user.email,
+    phone: user.phoneNumber,
+    address: user.address,
+    card:{
+      name: user.creditCardType,
+      number: user.creditCardNumber,
+      expMonth: user.expMonth,
+      expYear: user.expYear,
+      cvv: user.cvv
+    }
+  });
+  req.flash("success", "Update Information Success!");
+  res.redirect("back");
+}
 
 // module.exports.notFriend = async (req, res) => {
 //   userSocket(req, res);
