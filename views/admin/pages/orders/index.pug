@@ -4,22 +4,23 @@ include ../../mixins/box-pagination.pug
 
 block main
     h1 Orders Overview
-
-    if users.length > 0
-        table.table.table-striped.table-hover.mt-4
-            thead.thead-dark
-                tr
-                    th Number
-                    th User ID
-                    th User Name
-                    th Total Orders
-            tbody
-                each user, index in users
+    
+    if(role.permissions.includes('orders_view'))
+        if users.length > 0
+            table.table.table-striped.table-hover.mt-4
+                thead.thead-dark
                     tr
-                        td #{index + 1}
-                        td #{user.userId}
-                        td
-                            a(href=`/${prefixAdmin}/orders/${user.userId}`, class="text-decoration-none") #{user.fullName}
-                        td #{user.totalOrders}
-    else
-        p No orders found for any user.
+                        th Number
+                        th User ID
+                        th User Name
+                        th Total Orders
+                tbody
+                    each user, index in users
+                        tr
+                            td #{index + 1}
+                            td #{user.userId}
+                            td
+                                a(href=`/${prefixAdmin}/orders/${user.userId}`, class="text-decoration-none") #{user.fullName}
+                            td #{user.totalOrders}
+        else
+            p No orders found for any user.

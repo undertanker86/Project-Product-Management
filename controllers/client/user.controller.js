@@ -212,7 +212,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
 
     const subject = "Identify OTP";
-    const text = `Mã xác thực của bạn là <b>${otp}</b>. Mã OTP có hiệu lực trong vòng 5 phút, vui lòng không cung cấp mã OTP cho bất kỳ ai.`;
+    const text = `Your OTP is: <b>${otp}</b>. OTP code is valid for 5 minutes, please do not provide OTP code to anyone.`;
     sendMailHelper.sendMail(email, subject, text);
   }
   res.redirect(`/user/password/otp?email=${email}`);
@@ -297,6 +297,91 @@ module.exports.profilePost = async (req, res) => {
       cvv: user.cvv
     }
   });
+  const title = `You just updated your information!`;
+  const text=  `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Information Update Confirmation</title>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f9;
+              margin: 0;
+              padding: 0;
+          }
+          .container {
+              width: 100%;
+              max-width: 600px;
+              margin: 0 auto;
+              background-color: #ffffff;
+              padding: 20px;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+          .header {
+              text-align: center;
+              padding: 20px;
+              background-color: #4CAF50;
+              color: #ffffff;
+              border-radius: 8px 8px 0 0;
+          }
+          .content {
+              padding: 20px;
+              color: #333333;
+              line-height: 1.6;
+          }
+          .footer {
+              text-align: center;
+              padding: 20px;
+              font-size: 14px;
+              color: #777777;
+              border-top: 1px solid #eeeeee;
+          }
+          .button {
+              display: inline-block;
+              padding: 10px 20px;
+              margin: 20px 0;
+              background-color: #4CAF50;
+              color: #ffffff;
+              text-decoration: none;
+              border-radius: 4px;
+              font-size: 16px;
+          }
+          .button:hover {
+              background-color: #45a049;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="header">
+              <h2>Information Update Successful!</h2>
+          </div>
+          <div class="content">
+              <p>Dear ${user.fullName},</p>
+              <p>We wanted to let you know that your account information has been successfully updated. Here is a summary of your updated details:</p>
+              <ul>
+                  <li><strong>Name:</strong> ${user.fullName}</li>
+                  <li><strong>Email:</strong> ${user.email}</li>
+                  <li><strong>Phone:</strong> ${user.phone}</li>
+                  <li><strong>Address:</strong> ${user.address}</li>
+                  <li><strong>Credit Card Type:</strong> ${user.creditCardType}</li>
+              </ul>
+              <p>If any of these details are incorrect or need further adjustment, please feel free to update them at any time via your account settings.</p>
+              <p>If you have any questions or need assistance, don't hesitate to reach out to our support team.</p>
+              <a href="http://localhost:3000/user/profile" class="button">Go to Your Account</a>
+          </div>
+          <div class="footer">
+              <p>&copy; 2024 Beta. All rights reserved.</p>
+          </div>
+      </div>
+  </body>
+  </html>
+`;
+  sendMailHelper.sendMail(user.email, title, text);
   req.flash("success", "Update Information Success!");
   res.redirect("back");
 }
@@ -347,8 +432,6 @@ module.exports.notFriend = async (req, res) => {
   //   deleted: false,
   //   status: "active"
   // }).select("id fullName avatar");
-  
-
   res.render("client/pages/user/not-friend", {
     pageTitle: "List User",
     users: accounts

@@ -23,7 +23,7 @@ block main
         td(colspan="4")
           b Overview
       tr(data-name="dashboard_view")
-        td Xem
+        td View
         each item in records
           td(class="text-center")
             input(type="checkbox" data-id=item.id)
@@ -138,6 +138,22 @@ block main
           b Manage Chats
       tr(data-name="chats_view")
         td Chat
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr
+        td(colspan="4")
+          b Create account customer
+      tr(data-name="accounts_create_customer")
+        td Create
+        each item in records
+          td(class="text-center")
+            input(type="checkbox" data-id=item.id)
+      tr
+        td(colspan="4")
+          b Manage Customer Orders
+      tr(data-name="orders_view")
+        td View
         each item in records
           td(class="text-center")
             input(type="checkbox" data-id=item.id)

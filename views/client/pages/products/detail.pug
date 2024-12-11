@@ -45,7 +45,7 @@ block main
             // Hiển thị lựa chọn dung lượng
             if (product.capacities && product.capacities.length > 0)
               div(class="inner-capacities")
-                label Capacity: 
+                label Capacity/ Speed: 
                 select(id="capacity-1" name="capacity" class="form-control")
                   each capacity in product.capacities
                     option(value=capacity.name, data-price=capacity.price) #{capacity.name}

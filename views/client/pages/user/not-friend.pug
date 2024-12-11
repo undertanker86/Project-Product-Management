@@ -3,7 +3,7 @@ include ../../mixins/box-head.pug
 block main
   .row
     .col-12
-      +box-head(pageTitle)
+      +box-head("List CSR")
   .row(list-not-friends=user.id)
     each item in users
       .col-6(user-id=item.id)

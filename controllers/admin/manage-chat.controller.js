@@ -94,7 +94,7 @@ for(const chat of chats){
         _id: chat.userId,
         deleted: false
     });
-    chat.fullName = infoUser.fullName;
+    // chat.fullName = infoUser.fullName;
 }
   res.render("admin/pages/manage-chats/chat", {
     pageTitle: "Chat",
